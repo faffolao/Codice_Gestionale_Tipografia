@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>cart_window</class>
+ <widget class="QMainWindow" name="cart_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>802</width>
+    <height>609</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>802</width>
+    <height>609</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Carrello degli acquisti</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lbl_title">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>24</y>
+      <width>491</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Il tuo carrello</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="table_carrello">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>94</y>
+      <width>741</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Titolo prodotto</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Quantità disponibile</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Prezzo cadauno</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="lbl_tutorial">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>560</y>
+      <width>461</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Per rimuovere un prodotto selezionarlo dalla lista e premere Rimuovi prodotto.</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_remove_prod">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>622</x>
+      <y>553</y>
+      <width>151</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rimuovi prodotto</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

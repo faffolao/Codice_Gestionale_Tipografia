@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>print_doc_window</class>
+ <widget class="QMainWindow" name="print_doc_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>678</width>
+    <height>360</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>678</width>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Stampa di un documento</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lbl_title">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>26</y>
+      <width>411</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>28</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Stampa documento</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_tutorial">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>501</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tramite questa pagina è possibile richiedere la stampa del documento che si desidera.
+I formati supportati sono: PDF, DOCX, PNG, JPEG.</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_scegli_doc">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>150</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scegli file</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_selected_doc">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>156</y>
+      <width>391</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nessun file selezionato.</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>190</y>
+      <width>621</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_tipo_carta">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>213</y>
+      <width>351</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Con quale tipologia di carta desideri stampare il documento:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="combo_tipo_carta">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>210</y>
+      <width>261</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Carta ecologica</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Carta patinata</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Carta marcata</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="combo_rilegatura">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>247</y>
+      <width>261</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Nessuna</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rilegatura a spirale</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rilegatura a punto metallico</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rilegatura ad anelli</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="lbl_rilegatura">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>250</y>
+      <width>351</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rilegatura da applicare:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>290</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Invia stampa</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>register_dialog</class>
+ <widget class="QDialog" name="register_dialog">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
-    <height>735</height>
+    <width>582</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,227 @@
   <property name="modal">
    <bool>true</bool>
   </property>
+  <widget class="QLabel" name="title_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>281</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Registrazione</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tutorial_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>100</y>
+     <width>521</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Gentile cliente, compili il form sottostante per potersi registrare al portale della Tipografia.</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="username_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>143</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Username:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_username">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>143</y>
+     <width>451</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_password">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>178</y>
+     <width>451</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="password_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>178</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Password:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nome_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>215</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nome:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_nome">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>213</y>
+     <width>181</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="cognome_lbl">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>216</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cognome:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_cognome">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>213</y>
+     <width>191</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="cellulare_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>253</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cellulare:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_cellulare">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>253</y>
+     <width>181</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="data_nascita_lbl">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>257</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Data di nascita:</string>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="data_nascita_input">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>253</y>
+     <width>161</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_email">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>289</y>
+     <width>451</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="email_lbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>292</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Email:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_registrati">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>333</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Registrati</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>333</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Annulla</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
