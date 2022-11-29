@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>login_window</class>
+ <widget class="QMainWindow" name="login_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -26,7 +26,7 @@
    <string>Benvenuto nel Portale della Tipografia</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="lbl_title">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -44,7 +44,7 @@
      <string>Portale Tipografia</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="lbl_username">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -57,7 +57,7 @@
      <string>Username:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="txt_username">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -67,7 +67,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="txt_password">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -83,7 +83,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="lbl_password">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -96,7 +96,7 @@
      <string>Password:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -135,7 +135,7 @@
      <string>Non sei ancora registrato?</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btn_register">
     <property name="geometry">
      <rect>
       <x>410</x>
