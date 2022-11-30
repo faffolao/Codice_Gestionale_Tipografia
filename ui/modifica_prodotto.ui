@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>edit_prod_dialog</class>
+ <widget class="QDialog" name="edit_prod_dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>578</width>
+    <height>356</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>578</width>
+    <height>356</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Modifica prodotto selezionato</string>
+  </property>
+  <widget class="QLabel" name="lbl_title">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>521</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Modifica prodotto</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_prod_title">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>100</y>
+     <width>55</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Titolo:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_prod_title">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>100</y>
+     <width>431</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_prod_description">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>140</y>
+     <width>431</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_prod_description">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Descrizione:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_prod_price">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>180</y>
+     <width>81</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Prezzo (€):</string>
+   </property>
+  </widget>
+  <widget class="QDoubleSpinBox" name="txt_prezzo">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>180</y>
+     <width>191</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <double>9999.989999999999782</double>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_prod_quantita">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>180</y>
+     <width>55</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quantità:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="txt_prod_quantita">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>180</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>99999</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_prod_image">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>220</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Immagine del prodotto:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_select_image">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>250</y>
+     <width>161</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Seleziona immagine</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_selected_img">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>255</y>
+     <width>341</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nessuna immagine selezionata.</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_annulla">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>300</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Annulla</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_edit_prod">
+   <property name="geometry">
+    <rect>
+     <x>412</x>
+     <y>300</y>
+     <width>141</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Modifica prodotto</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
