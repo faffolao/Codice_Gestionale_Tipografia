@@ -73,5 +73,10 @@ class DataBase:
             self.dbb = sqlite3.connect(dababase_path)
             self.cur = self.dbb.cursor()
 
+    def query(self, query_string):
+        if ';' in query_string:
+            raise ValueError('Deve essere inviata UNA query senza delimitatore')
+        self.cur.execute(f"{query_string};")
+
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
