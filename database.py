@@ -72,3 +72,6 @@ class DataBase:
         else:
             self.dbb = sqlite3.connect(dababase_path)
             self.cur = self.dbb.cursor()
+
+    def dump_db(self):
+        return "\n".join(self.dbb.iterdump())
