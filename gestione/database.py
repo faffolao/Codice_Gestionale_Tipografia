@@ -1,5 +1,6 @@
 import sqlite3
 import os.path
+import hashlib
 
 class DataBase:
     tables = [
@@ -77,6 +78,23 @@ class DataBase:
         if ';' in query_string:
             raise ValueError('Deve essere inviata UNA query senza delimitatore')
         self.cur.execute(f"{query_string};")
+
+    def crittografia_psw_determ(self, passwd, salt):
+        enc_psw = hashlib.pbkdf2_hmac('sha256', passwd.encode('utf-8'), salt, 177013)
+        return salt.hex() + enc_psw.hex()
+
+    def crittografia_psw(self, passwd):
+        salt = os.urandom(16)
+        out = self.crittografia_psw_determ(passwd, salt)
+        return out
+
+    def verifica_psw(self, guess, enc_psw):
+        salt = bytes.fromhex(enc_psw[:16])
+        enc_guess = self.crittografia_psw_determ(guess, salt)
+        if enc_guess == enc_psw:
+            return True
+        else:
+            return False
 
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
