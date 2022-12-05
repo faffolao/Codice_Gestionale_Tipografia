@@ -77,7 +77,10 @@ class DataBase:
     def query(self, query_string):
         if ';' in query_string:
             raise ValueError('Deve essere inviata UNA query senza delimitatore')
-        self.cur.execute(f"{query_string};")
+        return self.cur.execute(f"{query_string};")
+
+    def get_lista_utenti(self):
+        return self.query("SELECT id,username,email FROM Utente").fetchall()
 
     def crittografia_psw_determ(self, passwd, salt):
         enc_psw = hashlib.pbkdf2_hmac('sha256', passwd.encode('utf-8'), salt, 177013)
@@ -95,6 +98,9 @@ class DataBase:
             return True
         else:
             return False
+
+    def chiudi_connessione(self):
+        self.dbb.close()
 
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
