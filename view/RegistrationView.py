@@ -1,14 +1,41 @@
-import sys
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QDialog, QWidget
+from PyQt5 import uic
+from PyQt5.QtWidgets import QDialog
+
+from Utenti.Utente import Utente
+from view.MsgBoxView import MsgBox
 
 
-class RegistrationView(QWidget):
-    def __init__(self, main_ctrl):
-        print("ciao2")
-        super(RegistrationView, self).__init__()
+class RegistrationView(QDialog):
+    def __init__(self, main_ctrl, parent):
+        super(RegistrationView, self).__init__(parent)
         self.__controller = main_ctrl
-        uic.loadUi('ui/reg2.ui', self)
-        self.show()
+        uic.loadUi('ui/registrazione.ui', self)
         self.setFixedSize(self.size())
-        #self.btn_login.clicked.connect(self.login)
+
+        self.btn_registrati.clicked.connect(self.registrazione_utente)
+        self.btn_annulla.clicked.connect(lambda: self.close())
+
+    def registrazione_utente(self):
+        username = self.txt_username.text()
+        password = self.txt_password.text()
+        nome = self.txt_nome.text()
+        cognome = self.txt_cognome.text()
+        email = self.txt_email.text()
+        cellulare = self.txt_cellulare.text()
+        data_nascita = self.data_nascita_input.text()
+
+        if self.check_fields(username, password, nome, cognome, email, cellulare):
+            usr = Utente(None, nome, cognome, username, password, email, cellulare, data_nascita)
+            self.__controller.registrazione(usr)
+            self.close()
+        else:
+            msg = MsgBox()
+            msg.show_error_msg("Per potersi registrare è necessario riempire i campi obbligatori (sono obbligatori "
+                               "tutti i campi eccetto Data di nascita).")
+
+    def check_fields(self, username, password, nome, cognome, email, cellulare):
+        # nota: le stringhe vuote sono considerate come dei valori False
+        if not username or not password or not nome or not cognome or not email or not cellulare:
+            return False
+        else:
+            return True

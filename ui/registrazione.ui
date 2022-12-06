@@ -227,7 +227,7 @@
     <string>Registrati</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btn_annulla">
    <property name="geometry">
     <rect>
      <x>460</x>

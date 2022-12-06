@@ -1,5 +1,18 @@
+from datetime import datetime
+
+
 class Utente:
-    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita):
+    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: str):
+        self.id = id
+        self.nome = nome
+        self.cognome = cognome
+        self.username = username
+        self.password = password
+        self.email = email
+        self.cellulare = cellulare
+        self.data_nascita = datetime.strptime(data_nascita, '%d-%m-%Y')
+
+    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: datetime):
         self.id = id
         self.nome = nome
         self.cognome = cognome
@@ -15,7 +28,7 @@ class Utente:
     def get_cognome(self):
         return self.cognome
 
-    def data_nascita(self):
+    def get_data_nascita(self):
         return self.data_nascita
 
     def get_email(self):
@@ -30,3 +43,5 @@ class Utente:
     def get_username(self):
         return self.username
 
+    def get_password(self):
+        return self.password
