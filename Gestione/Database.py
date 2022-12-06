@@ -112,7 +112,7 @@ class Database:
         self.query(f"""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
         VALUES({idCliente}, {ammonto}, {quantita}, {dataOra}, {via}, {numeroCivico}, {citta}, {cap})""")
 
-    def inserisci_utente(self, utente:Utente, ruolo):
+    def inserisci_utente(self, utente: Utente, ruolo):
         nome = utente.get_nome()
         cognome = utente.get_cognome()
         email = utente.get_email()
@@ -175,9 +175,13 @@ class Database:
         for ch in username:
             if ch not in self.alfabeto:
                 return False
+
         enc_pass_wrap = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()
+
         if enc_pass_wrap == None:
             return False
+
+        enc_pass = enc_pass_wrap[0]
         return self.verifica_psw(guess_pass, enc_pass)
 
     def chiudi_connessione(self):
@@ -185,6 +189,7 @@ class Database:
 
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
+
 
 if __name__ == '__main__':
     database = Database()
