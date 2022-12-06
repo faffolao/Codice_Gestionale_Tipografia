@@ -2,7 +2,8 @@ import sqlite3
 import os.path
 import hashlib
 
-class DataBase:
+
+class Database:
     tables = [
         """Utente(
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
