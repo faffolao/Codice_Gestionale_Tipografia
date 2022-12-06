@@ -12,8 +12,8 @@ class Database:
         email TEXT NOT NULL,
         username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
-        dataNascita INTEGER NOT NULL,
-        telefono TEXT NOT NULL,
+        dataNascita INTEGER,
+        telefono TEXT,
         ruolo TEXT NOT NULL
         )""",
         """Documento(
@@ -71,6 +71,8 @@ class Database:
             self.cur.execute("BEGIN TRANSACTION;")
             for table in self.tables:
                 self.cur.execute(f"CREATE TABLE {table};")
+            self.cur.execute("""INSERT INTO Utente(nome, cognome, email, username, password, ruolo)
+            VALUES('System', 'Administrator', 'root@admin.com', 'admin', 'deadbeefdeadbeefdeadbeefdeadbeef32d5051379c2292d13f3b022c3847d6f81791d458e7d1a80c1b4898bcbc2f7b2', 'admin')""")
             self.cur.execute("COMMIT TRANSACTION;")
         else:
             self.dbb = sqlite3.connect(dababase_path)
@@ -159,7 +161,7 @@ class Database:
         return out
 
     def verifica_psw(self, guess, enc_psw):
-        salt = bytes.fromhex(enc_psw[:16])
+        salt = bytes.fromhex(enc_psw[:32])
         enc_guess = self.crittografia_psw_determ(guess, salt)
         if enc_guess == enc_psw:
             return True
@@ -172,7 +174,7 @@ class Database:
         for ch in username:
             if ch not in self.alfabeto:
                 return False
-        enc_pass = self.query(f"SELECT password FROM Utente WHERE username={username}").fetchone()[0]
+        enc_pass = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()[0]
         return self.verifica_psw(guess_pass, enc_pass)
 
     def chiudi_connessione(self):
@@ -180,3 +182,7 @@ class Database:
 
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
+
+if __name__ == '__main__':
+    bababase = Database("prova.db")
+    print(bababase.verify_user("admin", "admin"))
