@@ -63,10 +63,10 @@ class Database:
         )"""
     ]
 
-    def __init__(self, dababase_path):
+    def __init__(self, database_path):
 
-        if not os.path.exists(dababase_path):
-            self.dbb = sqlite3.connect(dababase_path)
+        if not os.path.exists(database_path):
+            self.dbb = sqlite3.connect(database_path)
             self.cur = self.dbb.cursor()
             self.cur.execute("BEGIN TRANSACTION;")
             for table in self.tables:
@@ -75,7 +75,7 @@ class Database:
             VALUES('System', 'Administrator', 'root@admin.com', 'admin', 'deadbeefdeadbeefdeadbeefdeadbeef32d5051379c2292d13f3b022c3847d6f81791d458e7d1a80c1b4898bcbc2f7b2', 'admin')""")
             self.cur.execute("COMMIT TRANSACTION;")
         else:
-            self.dbb = sqlite3.connect(dababase_path)
+            self.dbb = sqlite3.connect(database_path)
             self.cur = self.dbb.cursor()
 
     def query(self, query_string):
@@ -184,5 +184,4 @@ class Database:
         return "\n".join(self.dbb.iterdump())
 
 if __name__ == '__main__':
-    bababase = Database("prova.db")
-    print(bababase.verify_user("admin", "admin"))
+    database = Database()
