@@ -63,6 +63,7 @@ class Database:
         PRIMARY KEY(idOrdine, idProdotto)
         )"""
     ]
+    alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890"
 
     def __init__(self, database_path):
 
@@ -146,6 +147,24 @@ class Database:
         self.query(f"DELETE FROM Utente WHERE id={iid}")
         self.query("COMMIT TRANSACTION")
 
+    def get_dettagli_utente(self, username:str):
+        for ch in username:
+            if ch not in self.alfabeto:
+                return None
+        dati = self.query(f"SELECT * FROM Utente WHERE username='{username}'").fetchone()
+        if dati is None:
+            return None
+
+        id = dati[0]
+        nome = dati[1]
+        cognome = dati[2]
+        email = dati[3]
+        password = dati[5]
+        dataNascita = dati[6]
+        telefono = dati[7]
+        ruolo = dati[8]
+        return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+
     def svuota_carrello(self, id):
         iid = int(id)
         self.query("BEGIN TRANSACTION")
@@ -169,8 +188,6 @@ class Database:
         else:
             return False
 
-    alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890"
-
     def verify_user(self, username, guess_pass):
         for ch in username:
             if ch not in self.alfabeto:
@@ -178,7 +195,7 @@ class Database:
 
         enc_pass_wrap = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()
 
-        if enc_pass_wrap == None:
+        if enc_pass_wrap is None:
             return False
 
         enc_pass = enc_pass_wrap[0]
