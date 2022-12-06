@@ -1,6 +1,7 @@
 import sqlite3
 import os.path
 import hashlib
+from Utenti.Utente import Utente
 
 
 class Database:
@@ -111,7 +112,7 @@ class Database:
         self.query(f"""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
         VALUES({idCliente}, {ammonto}, {quantita}, {dataOra}, {via}, {numeroCivico}, {citta}, {cap})""")
 
-    def inserisci_utente(self, utente, ruolo):
+    def inserisci_utente(self, utente:Utente, ruolo):
         nome = utente.get_nome()
         cognome = utente.get_cognome()
         email = utente.get_email()
@@ -174,7 +175,9 @@ class Database:
         for ch in username:
             if ch not in self.alfabeto:
                 return False
-        enc_pass = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()[0]
+        enc_pass_wrap = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()
+        if enc_pass_wrap == None:
+            return False
         return self.verifica_psw(guess_pass, enc_pass)
 
     def chiudi_connessione(self):
