@@ -1,19 +1,19 @@
 import sys
+from PyQt5.QtWidgets import QApplication
+from Utenti.Utente import Utente
+from Gestione.GestioneAccessi import GestioneAccessi
+from view.LoginView import LoginView
 
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow
 
-
-class Ui(QMainWindow):
-
-    def __init__(self):
-        super(Ui, self).__init__()
-        uic.loadUi('ui/login_form.ui', self)
-        self.show()
-        self.setFixedSize(self.size())
+class App(QApplication):
+    def __init__(self, sys_argv):
+        super(App, self).__init__(sys_argv)
+        # Connect everything together
+        self.main_ctrl = GestioneAccessi()
+        self.main_view = LoginView(self.main_ctrl)
+        self.main_view.show()
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = Ui()
-    app.exec_()
+    app = App(sys.argv)
+    sys.exit(app.exec_())
