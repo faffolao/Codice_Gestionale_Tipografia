@@ -29,10 +29,12 @@ class LoginView(QMainWindow):
         if not username or not password:
             msg = MsgBox()
             msg.show_error_msg("Inserire nome utente e/o password.")
+
             return
 
-        self.__controller.login(username, password)
+        self.__controller.login(username, password, self)
 
     def registrazione(self):
         register = RegistrationView(self.__controller, self)
         register.exec_()
+        self.close()

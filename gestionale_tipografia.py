@@ -20,6 +20,7 @@ class App(QApplication):
 
         # inizializzazione vista iniziale -> login form
         self.main_view = LoginView(self.main_ctrl)
+        self.main_ctrl.currentView = self.main_view
         self.main_view.show()
 
 
