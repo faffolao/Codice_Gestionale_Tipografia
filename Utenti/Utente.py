@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 class Utente:
-    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: str):
+    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita):
         self.id = id
         self.nome = nome
         self.cognome = cognome
@@ -10,7 +10,12 @@ class Utente:
         self.password = password
         self.email = email
         self.cellulare = cellulare
-        self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%y')
+        if type(data_nascita) is str:
+            self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%y')
+        elif type(data_nascita) is datetime:
+            self.data_nascita = data_nascita
+        else:
+            raise TypeError("data_nascita deve essere un'oggetto datetime o una stringa")
     """
     def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: datetime):
         self.id = id
