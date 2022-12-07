@@ -11,7 +11,7 @@ class Utente:
         self.email = email
         self.cellulare = cellulare
         if type(data_nascita) is str:
-            self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%y')
+            self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%Y')
         elif type(data_nascita) is datetime:
             self.data_nascita = data_nascita
         else:
