@@ -1,6 +1,8 @@
 import sqlite3
 import os.path
 import hashlib
+import time
+import datetime
 from Utenti.Utente import Utente
 
 
@@ -80,10 +82,10 @@ class Database:
             self.dbb = sqlite3.connect(database_path)
             self.cur = self.dbb.cursor()
 
-    def query(self, query_string):
+    def query(self, query_string, values=()):
         if ';' in query_string:
             raise ValueError('Deve essere inviata UNA query senza delimitatore')
-        return self.cur.execute(f"{query_string};")
+        return self.cur.execute(f"{query_string};", values)
 
     def get_lista_utenti(self):
         return self.query("SELECT id,username,email FROM Utente").fetchall()
@@ -96,9 +98,9 @@ class Database:
         tipoCarta = documento.get_tipo_carta()
         tipoRilegatura = documento.get_tipo_rilegatura()
         nomeFile = documento.get_nome_file()
-        dataOra = round(documento.get_data().mktime())
-        self.query(f"""INSERT INTO Documento(idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra)
-        VALUES({idCliente}, {tipoCarta},{tipoRilegatura}, {nomeFile}, {dataOra})""")
+        dataOra = round(time.mktime(documento.get_data().timetuple()))
+        self.query("""INSERT INTO Documento(idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra)
+        VALUES(?, ?, ?, ?, ?)""", (idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra))
 
     def inserisci_ordine_market(self, ordine):
         datiSpedizione = ordine.get_dati_spedizione()
@@ -110,8 +112,8 @@ class Database:
         citta = datiSpedizione["citta"]
         cap = datiSpedizione["cap"]
         quantita = ordine.get_quantita()
-        self.query(f"""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
-        VALUES({idCliente}, {ammonto}, {quantita}, {dataOra}, {via}, {numeroCivico}, {citta}, {cap})""")
+        self.query("""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
+        VALUES(?, ?, ?, ?, ?, ?, ?,?)""", (idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap))
 
     def inserisci_utente(self, utente: Utente, ruolo):
         nome = utente.get_nome()
@@ -119,10 +121,10 @@ class Database:
         email = utente.get_email()
         username = utente.get_username()
         password = self.crittografia_psw(utente.get_password())
-        dataNascita = utente.get_data_nascita().mktime()
-        telefono = utente.get_telefono()
-        self.query(f"""INSERT INTO Ordine(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
-        VALUES({nome},{cognome},{email},{username},{password},{dataNascita},{telefono},{ruolo})""")
+        dataNascita = time.mktime(utente.get_data_nascita().timetuple())
+        telefono = utente.get_cellulare()
+        self.query("""INSERT INTO Utente(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
+        VALUES(?,?,?,?,?,?,?,?)""", (nome, cognome, email, username, password, dataNascita, telefono, ruolo))
 
     def inserisci_prodotto(self, prodotto):
         titolo = prodotto.get_titolo()
@@ -131,27 +133,26 @@ class Database:
         quantita = prodotto.get_quantita()
         prezzo = prodotto.get_prezzo()
         self.query(f"""INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo)
-        VALUES({titolo},{descrizione},{immagine},{quantita},{prezzo})""")
+        VALUES(?,?,?,?,?)""", (titolo, descrizione, immagine, quantita, prezzo))
 
     def rimuovi_prodotto(self, id):
-        self.query(f"DELETE FROM Prodotto WHERE id={int(id)}")
+        self.query(f"DELETE FROM Prodotto WHERE id=?", (id,))
 
     def rimuovi_utente(self, id):
-        iid = int(id)
         self.query("BEGIN TRANSACTION")
-        self.query(f"DELETE FROM CarrelloCliente WHERE idCliente={iid}")
-        self.query(f"""DELETE PO FROM ProdottiOrdinati as PO INNER JOIN Ordine ON PO.idOrdine=Ordine.id
-        WHERE Ordine.idUtente={iid}""")
-        self.query(f"DELETE FROM Ordine WHERE idUtente={iid}")
-        self.query(f"DELETE FROM Documento WHERE idUtente={iid}")
-        self.query(f"DELETE FROM Utente WHERE id={iid}")
+        self.query("DELETE FROM CarrelloCliente WHERE idCliente=?", (id,))
+        self.query("""DELETE PO FROM ProdottiOrdinati as PO INNER JOIN Ordine ON PO.idOrdine=Ordine.id
+        WHERE Ordine.idUtente=?""",(id,))
+        self.query("DELETE FROM Ordine WHERE idUtente=?",(id,))
+        self.query("DELETE FROM Documento WHERE idUtente=?", (id,))
+        self.query("DELETE FROM Utente WHERE id=?", (id,))
         self.query("COMMIT TRANSACTION")
 
     def get_dettagli_utente(self, username:str):
         for ch in username:
             if ch not in self.alfabeto:
                 return None
-        dati = self.query(f"SELECT * FROM Utente WHERE username='{username}'").fetchone()
+        dati = self.query("SELECT * FROM Utente WHERE username=?", (username,)).fetchone()
         if dati is None:
             return None
 
@@ -166,9 +167,8 @@ class Database:
         return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
 
     def svuota_carrello(self, id):
-        iid = int(id)
         self.query("BEGIN TRANSACTION")
-        self.query(f"DELETE FROM CarrelloCliente WHERE idCliente={iid}")
+        self.query("DELETE FROM CarrelloCliente WHERE idCliente=?", (id,))
         self.query("COMMIT TRANSACTION")
 
     def crittografia_psw_determ(self, passwd, salt):
@@ -193,7 +193,7 @@ class Database:
             if ch not in self.alfabeto:
                 return False
 
-        enc_pass_wrap = self.query(f"SELECT password FROM Utente WHERE username='{username}'").fetchone()
+        enc_pass_wrap = self.query("SELECT password FROM Utente WHERE username=?",(username,)).fetchone()
 
         if enc_pass_wrap is None:
             return False

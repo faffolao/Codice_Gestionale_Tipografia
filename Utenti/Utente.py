@@ -10,8 +10,8 @@ class Utente:
         self.password = password
         self.email = email
         self.cellulare = cellulare
-        self.data_nascita = datetime.strptime(data_nascita, '%d-%m-%Y')
-
+        self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%y')
+    """
     def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: datetime):
         self.id = id
         self.nome = nome
@@ -21,6 +21,7 @@ class Utente:
         self.email = email
         self.cellulare = cellulare
         self.data_nascita = data_nascita
+    """
 
     def get_cellulare(self):
         return self.cellulare
@@ -28,7 +29,7 @@ class Utente:
     def get_cognome(self):
         return self.cognome
 
-    def get_data_nascita(self):
+    def get_data_nascita(self) -> datetime:
         return self.data_nascita
 
     def get_email(self):
