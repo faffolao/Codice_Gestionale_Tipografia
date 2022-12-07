@@ -4,6 +4,7 @@ import hashlib
 import time
 import datetime
 from Utenti.Utente import Utente
+from Utenti.Cliente import Cliente
 
 
 class Database:
@@ -101,6 +102,7 @@ class Database:
         dataOra = round(time.mktime(documento.get_data().timetuple()))
         self.query("""INSERT INTO Documento(idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra)
         VALUES(?, ?, ?, ?, ?)""", (idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra))
+        self.query("COMMIT TRANSACTION")
 
     def inserisci_ordine_market(self, ordine):
         datiSpedizione = ordine.get_dati_spedizione()
@@ -114,6 +116,7 @@ class Database:
         quantita = ordine.get_quantita()
         self.query("""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
         VALUES(?, ?, ?, ?, ?, ?, ?,?)""", (idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap))
+        self.query("COMMIT TRANSACTION")
 
     def inserisci_utente(self, utente: Utente, ruolo):
         nome = utente.get_nome()
@@ -123,8 +126,10 @@ class Database:
         password = self.crittografia_psw(utente.get_password())
         dataNascita = time.mktime(utente.get_data_nascita().timetuple())
         telefono = utente.get_cellulare()
+        ddt = (nome, cognome, email, username, password, dataNascita, telefono, ruolo)
         self.query("""INSERT INTO Utente(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
-        VALUES(?,?,?,?,?,?,?,?)""", (nome, cognome, email, username, password, dataNascita, telefono, ruolo))
+        VALUES(?,?,?,?,?,?,?,?)""", ddt)
+        self.query("COMMIT TRANSACTION")
 
     def inserisci_prodotto(self, prodotto):
         titolo = prodotto.get_titolo()
@@ -134,9 +139,11 @@ class Database:
         prezzo = prodotto.get_prezzo()
         self.query(f"""INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo)
         VALUES(?,?,?,?,?)""", (titolo, descrizione, immagine, quantita, prezzo))
+        self.query("COMMIT TRANSACTION")
 
     def rimuovi_prodotto(self, id):
         self.query(f"DELETE FROM Prodotto WHERE id=?", (id,))
+        self.query("COMMIT TRANSACTION")
 
     def rimuovi_utente(self, id):
         self.query("BEGIN TRANSACTION")
@@ -164,7 +171,16 @@ class Database:
         dataNascita = dati[6]
         telefono = dati[7]
         ruolo = dati[8]
-        return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+        if ruolo == "cliente":
+            return Cliente(id, nome, cognome, username, password, email, telefono, dataNascita)
+        elif ruolo == "admin":
+            #TODO usa classe Dipendente con attributo isAdmin=True
+            return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+        elif ruolo == "impiegato":
+            #TODO usa classe Dipendente con attributo isAdmin=False
+            return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+        else:
+            return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
 
     def svuota_carrello(self, id):
         self.query("BEGIN TRANSACTION")
