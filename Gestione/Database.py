@@ -5,6 +5,7 @@ import time
 import datetime
 from Utenti.Utente import Utente
 from Utenti.Cliente import Cliente
+from Utenti.Impiegato import Impiegato
 
 
 class Database:
@@ -174,11 +175,9 @@ class Database:
         if ruolo == "cliente":
             return Cliente(id, nome, cognome, username, password, email, telefono, dataNascita)
         elif ruolo == "admin":
-            #TODO usa classe Dipendente con attributo isAdmin=True
-            return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+            return Impiegato(id, nome, cognome, username, password, email, telefono, dataNascita, True)
         elif ruolo == "impiegato":
-            #TODO usa classe Dipendente con attributo isAdmin=False
-            return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
+            return Impiegato(id, nome, cognome, username, password, email, telefono, dataNascita, False)
         else:
             return Utente(id, nome, cognome, username, password, email, telefono, dataNascita)
 
