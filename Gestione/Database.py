@@ -156,7 +156,7 @@ class Database:
         self.query("DELETE FROM Utente WHERE id=?", (id,))
         self.query("COMMIT TRANSACTION")
 
-    def get_dettagli_utente(self, username:str):
+    def get_dettagli_utente(self, username: str):
         for ch in username:
             if ch not in self.alfabeto:
                 return None
@@ -169,7 +169,10 @@ class Database:
         cognome = dati[2]
         email = dati[3]
         password = dati[5]
-        dataNascita = dati[6]
+        data_nascita_unix = dati[6]
+        if data_nascita_unix is None:
+            data_nascita_unix = 0
+        dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix)
         telefono = dati[7]
         ruolo = dati[8]
         if ruolo == "cliente":
