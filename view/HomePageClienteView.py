@@ -1,22 +1,27 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
-
+from view.LoginView import LoginView
 
 class HomePageClienteView(QMainWindow):
-    def __init__(self, access_ctrl):
+    def __init__(self, login_manager_model):
         # inizializzazione finestra
         super(HomePageClienteView, self).__init__()
 
         # associazione controller a questa vista
-        self.__controller = access_ctrl
+        self.login_manager = login_manager_model
 
         uic.loadUi('ui/home_page_cliente.ui', self)
-        self.show()
         self.setFixedSize(self.size())
 
-        # mapping delle funzioni agli eventi click dei pulsanti
-        '''
-        self.btn_logout.clicked.connect(self.login)
-        self.btn_stampa_doc.clicked.connect(self.login)
-        self.btn_open_market.clicked.connect(self.login)
-        '''
+        self.lbl_titolo.setText("Benvenuto, " + self.login_manager.get_utente_connesso().get_nome())
+        self.lbl_user_email.setText(self.login_manager.get_utente_connesso().get_email())
+
+        self.btn_logout.clicked.connect(self.logout)
+
+        self.show()
+
+    def logout(self):
+        self.login_manager.logout()
+        self.login_form = LoginView(self.login_manager)
+        self.login_form.show()
+        self.close()

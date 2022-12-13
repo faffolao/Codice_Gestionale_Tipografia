@@ -14,14 +14,11 @@ class App(QApplication):
         # inizializzazione database
         self.db_con = Database("system.db")
 
-        # inizializzazione controller iniziale -> permetterà la comunicazione tra le viste e le classi Model
-        # (Gestione, Utenti, E-Commerce, Stampa)
-        self.main_ctrl = GestioneAccessi(self.db_con)
+        self.using_model = GestioneAccessi(self.db_con)
 
         # inizializzazione vista iniziale -> login form
-        self.main_view = LoginView(self.main_ctrl)
-        self.main_ctrl.currentView = self.main_view
-        self.main_view.show()
+        self.login_view = LoginView(self.using_model)
+        self.login_view.show()
 
 
 if __name__ == '__main__':
