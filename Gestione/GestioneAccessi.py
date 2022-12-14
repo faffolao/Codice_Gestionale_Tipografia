@@ -36,4 +36,5 @@ class GestioneAccessi(QObject):
 
     def registrazione(self, utente: Utente):
         self.db_con.inserisci_utente(utente, "cliente")
+        self.utente_connesso = utente
         print(self.db_con.get_lista_utenti())

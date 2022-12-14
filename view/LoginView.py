@@ -2,6 +2,9 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 
 import view.HomePageClienteView as HPCV
+from Utenti.Cliente import Cliente
+from Utenti.Impiegato import Impiegato
+
 from view.RegistrationView import RegistrationView
 from view.MsgBoxView import MsgBox
 
@@ -34,8 +37,14 @@ class LoginView(QMainWindow):
             return
 
         if self.login_manager.login(username, password):
-            self.customer_home = HPCV.HomePageClienteView(self.login_manager)
-            self.customer_home.show()
+            user_type = self.login_manager.get_utente_connesso()
+
+            if isinstance(user_type, Cliente):
+                self.customer_home = HPCV.HomePageClienteView(self.login_manager)
+                self.customer_home.show()
+            elif isinstance(user_type, Impiegato):
+                print("la parte del'impiegato arriverà più avanti...")
+
             self.close()
 
     def registrazione(self):

@@ -178,7 +178,7 @@ I formati supportati sono: PDF, DOCX, PNG, JPEG.</string>
      <string>Rilegatura da applicare:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btn_invia_stampa">
     <property name="enabled">
      <bool>false</bool>
     </property>
