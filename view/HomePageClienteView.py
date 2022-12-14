@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
-from view.LoginView import LoginView
+import view.LoginView as LV
 
 class HomePageClienteView(QMainWindow):
     def __init__(self, login_manager_model):
@@ -22,6 +22,6 @@ class HomePageClienteView(QMainWindow):
 
     def logout(self):
         self.login_manager.logout()
-        self.login_form = LoginView(self.login_manager)
+        self.login_form = LV.LoginView(self.login_manager)
         self.login_form.show()
         self.close()

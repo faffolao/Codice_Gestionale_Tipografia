@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 
-from view.HomePageClienteView import HomePageClienteView
+import view.HomePageClienteView as HPCV
 from view.RegistrationView import RegistrationView
 from view.MsgBoxView import MsgBox
 
@@ -34,7 +34,7 @@ class LoginView(QMainWindow):
             return
 
         if self.login_manager.login(username, password):
-            self.customer_home = HomePageClienteView(self.login_manager)
+            self.customer_home = HPCV.HomePageClienteView(self.login_manager)
             self.customer_home.show()
             self.close()
 
