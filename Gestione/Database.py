@@ -100,7 +100,7 @@ class Database:
         tipoCarta = documento.get_tipo_carta()
         tipoRilegatura = documento.get_tipo_rilegatura()
         nomeFile = documento.get_nome_file()
-        dataOra = round(time.mktime(documento.get_data().timetuple()))
+        dataOra = round(time.time())
         self.query("""INSERT INTO Documento(idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra)
         VALUES(?, ?, ?, ?, ?)""", (idCliente, tipoCarta, tipoRilegatura, nomeFile, dataOra))
         self.query("COMMIT TRANSACTION")

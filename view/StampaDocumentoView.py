@@ -1,4 +1,5 @@
 from PyQt5 import uic
+from PyQt5.QtCore import QFileInfo
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
 from Gestione.GestioneSessioneStampa import GestioneSessioneStampa
@@ -31,10 +32,10 @@ class StampaDocumentoView(QMainWindow):
                                                     "Documenti stampabili (*.pdf *.docx *.png *.jpeg)")
 
         # ottengo il nome del file a partire dal file selezionato
-        filename = selected_file[0]
+        filename = QFileInfo(selected_file[0]).fileName()
 
         if filename:
-            doc = Documento(filename)
+            doc = Documento(filename, self.cliente.get_id())
             self.sessione_stampa.set_doc(doc)
             self.sessione_stampa.set_carta(self.combo_tipo_carta.currentText())
             self.sessione_stampa.set_rilegatura(self.combo_rilegatura.currentText())

@@ -9,8 +9,9 @@ class Documento:
         self.data = data
 
     # questo costruttore viene usato nell'area di stampa del documento
-    def __init__(self, nome_file):
+    def __init__(self, nome_file, id_cliente):
         self.nome_file = nome_file
+        self.id_cliente = id_cliente
 
     def get_data(self):
         return self.data
