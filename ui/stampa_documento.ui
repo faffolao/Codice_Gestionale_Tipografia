@@ -70,9 +70,12 @@ I formati supportati sono: PDF, DOCX, PNG, JPEG.</string>
      <rect>
       <x>130</x>
       <y>156</y>
-      <width>391</width>
+      <width>381</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="text">
      <string>Nessun file selezionato.</string>
@@ -192,6 +195,22 @@ I formati supportati sono: PDF, DOCX, PNG, JPEG.</string>
     </property>
     <property name="text">
      <string>Invia stampa</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_elimina_doc">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>150</y>
+      <width>131</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Elimina documento</string>
     </property>
    </widget>
   </widget>

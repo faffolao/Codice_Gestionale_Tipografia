@@ -1,6 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 import view.LoginView as LV
+from Gestione.GestioneSessioneStampa import GestioneSessioneStampa
 from view.StampaDocumentoView import StampaDocumentoView
 
 
@@ -32,7 +33,8 @@ class HomePageClienteView(QMainWindow):
         self.close()
 
     def apri_sezione_stampa(self):
-        self.stampa_view = StampaDocumentoView(self.login_manager.get_utente_connesso())
+        print_session_manager = GestioneSessioneStampa(self.login_manager.db_con)
+        self.stampa_view = StampaDocumentoView(self.login_manager.get_utente_connesso(), print_session_manager)
         self.stampa_view.show()
 
     def apri_ecommerce(self):
