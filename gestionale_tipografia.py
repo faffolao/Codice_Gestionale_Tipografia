@@ -11,10 +11,7 @@ class App(QApplication):
         # inizializzazione app
         super(App, self).__init__(sys_argv)
 
-        # inizializzazione database
-        self.db_con = Database("system.db")
-
-        self.using_model = GestioneAccessi(self.db_con)
+        self.using_model = GestioneAccessi()
 
         # inizializzazione vista iniziale -> login form
         self.login_view = LoginView(self.using_model)

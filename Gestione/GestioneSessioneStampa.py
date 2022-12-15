@@ -4,9 +4,8 @@ from view.MsgBoxView import MsgBox
 
 
 class GestioneSessioneStampa:
-    def __init__(self, db_con):
+    def __init__(self):
         self.doc = None
-        self.db_con = db_con
 
     def set_doc(self, doc):
         self.doc = doc

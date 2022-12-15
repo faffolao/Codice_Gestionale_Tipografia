@@ -1,5 +1,6 @@
 from Gestione.Database import Database
 
+
 # DISCLAIMER:
 # La coda di stampa è simulata per motivi didattici; conterrà solamente i nomi dei file che devono essere stampati
 # per i clienti che li richiedono.
