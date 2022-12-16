@@ -1,3 +1,5 @@
+from PyQt5.QtGui import QPixmap
+
 class Prodotto:
 
     def __init__(self, descrizione, id, immagine, prezzo, quantita, titolo):
@@ -11,6 +13,9 @@ class Prodotto:
     def get_descrizione(self):
         return self.descrizione
     def get_immagine(self):
+        pix = QPixmap()
+        pix.loadFromData(format="JPG", buf=self.immagine)
+    def get_dati_immagine(self):
         return self.immagine
     def get_prezzo(self):
         return self.prezzo

@@ -135,7 +135,7 @@ class Database:
     def inserisci_prodotto(self, prodotto):
         titolo = prodotto.get_titolo()
         descrizione = prodotto.get_descrizione()
-        immagine = prodotto.get_immagine()
+        immagine = prodotto.get_dati_immagine()
         quantita = prodotto.get_quantita()
         prezzo = prodotto.get_prezzo()
         self.query(f"""INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo)
