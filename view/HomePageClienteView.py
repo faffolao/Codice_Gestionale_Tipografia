@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 import view.LoginView as LV
 from Gestione.GestioneSessioneStampa import GestioneSessioneStampa
+from view.CatalogoView import CatalogoView
 from view.StampaDocumentoView import StampaDocumentoView
 
 
@@ -38,4 +39,5 @@ class HomePageClienteView(QMainWindow):
         self.stampa_view.show()
 
     def apri_ecommerce(self):
-        pass
+        self.catalogo_view = CatalogoView()
+        self.catalogo_view.show()

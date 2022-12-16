@@ -157,7 +157,7 @@
       <item>
        <widget class="QPushButton" name="btn_search_prod">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Ricerca prodotto</string>

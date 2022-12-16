@@ -3,6 +3,8 @@ import os.path
 import hashlib
 import time
 import datetime
+
+from ECommerce.Prodotto import Prodotto
 from Utenti.Utente import Utente
 from Utenti.Cliente import Cliente
 from Utenti.Impiegato import Impiegato
@@ -224,6 +226,15 @@ class Database:
 
     def dump_db(self):
         return "\n".join(self.dbb.iterdump())
+
+    def get_catalogo(self):
+        query_list = self.query("SELECT * FROM Prodotto").fetchall()
+
+        prodotto_list = []
+        for tupla in query_list:
+            prodotto_list.append(Prodotto(tupla[2], tupla[0], tupla[3], tupla[5], tupla[4], tupla[1]))
+
+        return prodotto_list
 
 
 if __name__ == '__main__':
