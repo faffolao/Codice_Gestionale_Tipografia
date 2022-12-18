@@ -34,10 +34,10 @@ class HomePageClienteView(QMainWindow):
         self.close()
 
     def apri_sezione_stampa(self):
-        print_session_manager = GestioneSessioneStampa(self.login_manager.db_con)
+        print_session_manager = GestioneSessioneStampa()
         self.stampa_view = StampaDocumentoView(self.login_manager.get_utente_connesso(), print_session_manager)
         self.stampa_view.show()
 
     def apri_ecommerce(self):
-        self.catalogo_view = CatalogoView()
+        self.catalogo_view = CatalogoView(self.login_manager.get_utente_connesso())
         self.catalogo_view.show()

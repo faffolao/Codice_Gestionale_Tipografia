@@ -145,15 +145,15 @@ class Database:
         self.query("COMMIT TRANSACTION")
 
     def rimuovi_prodotto(self, id):
-        self.query(f"DELETE FROM Prodotto WHERE id=?", (id,))
+        self.query(f"DELETE FROM Prodotto WHERE id=?", id)
         self.query("COMMIT TRANSACTION")
 
     def rimuovi_utente(self, id):
         self.query("BEGIN TRANSACTION")
         self.query("DELETE FROM CarrelloCliente WHERE idCliente=?", (id,))
         self.query("""DELETE PO FROM ProdottiOrdinati as PO INNER JOIN Ordine ON PO.idOrdine=Ordine.id
-        WHERE Ordine.idUtente=?""",(id,))
-        self.query("DELETE FROM Ordine WHERE idUtente=?",(id,))
+        WHERE Ordine.idUtente=?""", (id,))
+        self.query("DELETE FROM Ordine WHERE idUtente=?", (id,))
         self.query("DELETE FROM Documento WHERE idUtente=?", (id,))
         self.query("DELETE FROM Utente WHERE id=?", (id,))
         self.query("COMMIT TRANSACTION")
@@ -213,7 +213,7 @@ class Database:
             if ch not in self.alfabeto:
                 return False
 
-        enc_pass_wrap = self.query("SELECT password FROM Utente WHERE username=?",(username,)).fetchone()
+        enc_pass_wrap = self.query("SELECT password FROM Utente WHERE username=?", (username,)).fetchone()
 
         if enc_pass_wrap is None:
             return False
@@ -235,6 +235,20 @@ class Database:
             prodotto_list.append(Prodotto(tupla[2], tupla[0], tupla[3], tupla[5], tupla[4], tupla[1]))
 
         return prodotto_list
+
+    def get_carrello_cliente(self, id_cliente):
+        query_list = self.query(
+            "SELECT Prodotto.descrizione, Prodotto.id, Prodotto.immagine, Prodotto.prezzo, CarrelloCliente.quantita, Prodotto.titolo "
+            "FROM CarrelloCliente "
+            "JOIN Prodotto ON CarrelloCliente.idProdotto = Prodotto.id "
+            "JOIN Utente ON CarrelloCliente.idCliente = Utente.id "
+            "WHERE Utente.id = ?", (id_cliente,)).fetchall()
+
+        prodotti_list = []
+        for tupla in query_list:
+            prodotti_list.append(Prodotto(tupla[0], tupla[1], tupla[2], tupla[3], tupla[4], tupla[5]))
+
+        return prodotti_list
 
 
 if __name__ == '__main__':
