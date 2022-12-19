@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog
 
-from Utenti.Utente import Utente
+from Utenti.Cliente import Cliente
 import view.HomePageClienteView as HPCV
 from view.MsgBoxView import MsgBox
 
@@ -28,7 +28,7 @@ class RegistrationView(QDialog):
         data_nascita = self.data_nascita_input.text()
 
         if self.check_fields(username, password, nome, cognome, email, cellulare):
-            usr = Utente(None, nome, cognome, username, password, email, cellulare, data_nascita)
+            usr = Cliente(None, nome, cognome, username, password, email, cellulare, data_nascita)
             self.login_manager.registrazione(usr)
 
             self.home_page_customer = HPCV.HomePageClienteView(self.login_manager)
