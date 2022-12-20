@@ -1,6 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QAbstractItemView, QDialog
 from ECommerce.Catalogo import Catalogo
+import view.AggiungiProdottoView as APV
 
 
 class GestioneProdottiView(QMainWindow):
@@ -12,6 +13,8 @@ class GestioneProdottiView(QMainWindow):
 
         self.table_prodotti.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table_prodotti.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        self.btn_add_prod.clicked.connect(self.aggiungi_prodotto)
 
         self.catalogo = Catalogo()
         lista_prodotti = self.catalogo.get_lista_prodotti()
@@ -38,3 +41,8 @@ class GestioneProdottiView(QMainWindow):
             self.table_prodotti.setItem(num_riga, 3, prod_price)
 
             num_riga += 1
+
+    def aggiungi_prodotto(self):
+        aggiunta_prodotto = APV.AggiungiProdottoView(self.catalogo)
+        aggiunta_prodotto.exec_()
+        self.carica_catalogo(self.catalogo.get_lista_prodotti())

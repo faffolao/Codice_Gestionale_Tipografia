@@ -16,8 +16,14 @@ class HomePageImpiegatoView(QMainWindow):
         self.lbl_impiegato_connesso.setText(f"impiegato connesso: {self.login_manager.get_utente_connesso().get_nome()} {self.login_manager.get_utente_connesso().get_cognome()}")
 
         self.btn_gestione_prodotti.clicked.connect(self.gestione_prod)
-        self.show()
+        self.btn_logout.clicked.connect(self.logout)
 
     def gestione_prod(self):
         self.gestione_prodotti_view = GPV.GestioneProdottiView()
         self.gestione_prodotti_view.show()
+
+    def logout(self):
+        self.login_manager.logout()
+        self.login_form = LV.LoginView(self.login_manager)
+        self.login_form.show()
+        self.close()
