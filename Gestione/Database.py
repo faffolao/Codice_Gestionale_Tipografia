@@ -256,7 +256,3 @@ class Database:
             prodotti_list.append(Prodotto(tupla[0], tupla[1], tupla[2], tupla[3], tupla[4], tupla[5]))
 
         return prodotti_list
-
-
-if __name__ == '__main__':
-    database = Database()
