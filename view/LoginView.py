@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 
 import view.HomePageClienteView as HPCV
+import view.HomePageImpiegatoView as HPIV
 from Utenti.Cliente import Cliente
 from Utenti.Impiegato import Impiegato
 
@@ -44,6 +45,9 @@ class LoginView(QMainWindow):
                 self.customer_home.show()
             elif isinstance(user_type, Impiegato):
                 print("la parte del'impiegato arriverà più avanti...")
+                print("no, arriva adesso!")
+                self.employee_home = HPIV.HomePageImpiegatoView(self.login_manager)
+                self.employee_home.show()
 
             self.close()
 
