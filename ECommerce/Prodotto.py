@@ -19,7 +19,8 @@ class Prodotto:
     # GUI QT5.
     def get_immagine_rendered(self):
         pix = QPixmap()
-        pix.loadFromData(format="JPG", buf=self.immagine)
+        pix.loadFromData(self.immagine)
+        return pix
 
     # questo metodo ritorna l'immagine del prodotto sottoforma di blob (sequenza di byte che rappresenta l'immagine)
     def get_immagine(self):
