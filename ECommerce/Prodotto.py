@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPixmap
-
+from PyQt5.QtCore import Qt
 
 class Prodotto:
 
@@ -17,10 +17,13 @@ class Prodotto:
 
     # questo metodo ritorna l'immagine del prodotto sottoforma di QPixmap, che ne permette la rappresentazione nelle
     # GUI QT5.
-    def get_immagine_rendered(self):
+    def get_immagine_rendered(self, width, height):
         pix = QPixmap()
         pix.loadFromData(self.immagine)
-        return pix
+        if not width or not height:
+            return pix
+        else:
+            return pix.scaled(width,height,Qt.KeepAspectRatio)
 
     # questo metodo ritorna l'immagine del prodotto sottoforma di blob (sequenza di byte che rappresenta l'immagine)
     def get_immagine(self):

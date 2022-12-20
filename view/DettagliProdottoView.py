@@ -15,4 +15,4 @@ class DettagliProdottoView(QDialog):
         self.lbl_prod_price.setText(str(prodotto.get_prezzo()) + "€")
         self.lbl_prod_details.setText(f"ID: {prodotto.get_id()} - {prodotto.get_quantita()} pezzi rimasti in magazzino")
         self.lbl_prod_description.setText(prodotto.get_descrizione())
-        self.prod_image.setPixmap(prodotto.get_immagine_rendered())
+        self.prod_image.setPixmap(prodotto.get_immagine_rendered(151,141))
