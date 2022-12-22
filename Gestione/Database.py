@@ -235,11 +235,11 @@ class Database:
         return "\n".join(self.dbb.iterdump())
 
     def get_catalogo(self):
-        query_list = self.query("SELECT * FROM Prodotto").fetchall()
+        query_list = self.query("SELECT descrizione,id,immagine,prezzo,quantita,titolo FROM Prodotto").fetchall()
 
         prodotto_list = []
         for tupla in query_list:
-            prodotto_list.append(Prodotto(tupla[2], tupla[0], tupla[3], tupla[5], tupla[4], tupla[1]))
+            prodotto_list.append(Prodotto(descrizione=tupla[0], id=tupla[1], immagine=tupla[2], prezzo=tupla[3], quantita=tupla[4], titolo=tupla[5]))
 
         return prodotto_list
 
