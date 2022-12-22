@@ -72,7 +72,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Descrizione</string>
+        <string>Quantità</string>
        </property>
       </column>
       <column>
@@ -82,7 +82,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Quantità</string>
+        <string>Descrizione</string>
        </property>
       </column>
       <column>

@@ -13,6 +13,7 @@ class AggiungiProdottoView(QDialog):
 
         self.btn_select_image.clicked.connect(self.select_image)
         self.btn_aggiungi_prod.clicked.connect(self.aggiungi)
+        self.btn_annulla.clicked.connect(self.annulla)
 
     def aggiungi(self):
         titolo = self.txt_prod_title.text()
@@ -26,7 +27,10 @@ class AggiungiProdottoView(QDialog):
         else:
             prodotto = Prodotto(descrizione, 0, self.dati_immagine, prezzo, quantita, titolo)
             self.catalogo.db_con.inserisci_prodotto(prodotto)
-        self.close()
+        self.accept()
+
+    def annulla(self):
+        self.reject()
 
     def select_image(self):
         filename, _ = QFileDialog.getOpenFileName(self)

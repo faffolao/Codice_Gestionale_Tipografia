@@ -34,15 +34,18 @@ class GestioneProdottiView(QMainWindow):
             prod_title = QTableWidgetItem(prod.get_titolo())
             prod_qta = QTableWidgetItem(str(prod.get_quantita()))
             prod_price = QTableWidgetItem(str(prod.get_prezzo()) + "€")
+            prod_descr = QTableWidgetItem(prod.get_descrizione())
 
             self.table_prodotti.setItem(num_riga, 0, prod_id)
             self.table_prodotti.setItem(num_riga, 1, prod_title)
             self.table_prodotti.setItem(num_riga, 2, prod_qta)
             self.table_prodotti.setItem(num_riga, 3, prod_price)
+            self.table_prodotti.setItem(num_riga, 4, prod_descr)
 
             num_riga += 1
 
     def aggiungi_prodotto(self):
         aggiunta_prodotto = APV.AggiungiProdottoView(self.catalogo)
-        aggiunta_prodotto.exec_()
-        self.carica_catalogo(self.catalogo.get_lista_prodotti())
+        if aggiunta_prodotto.exec():
+            self.catalogo = Catalogo()
+            self.carica_catalogo(self.catalogo.get_lista_prodotti())
