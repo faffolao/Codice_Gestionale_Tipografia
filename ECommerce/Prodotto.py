@@ -23,7 +23,7 @@ class Prodotto:
         if not width or not height:
             return pix
         else:
-            return pix.scaled(width,height,Qt.KeepAspectRatio)
+            return pix.scaled(width, height, Qt.KeepAspectRatio)
 
     # questo metodo ritorna l'immagine del prodotto sottoforma di blob (sequenza di byte che rappresenta l'immagine)
     def get_immagine(self):
@@ -42,4 +42,7 @@ class Prodotto:
         return self.id
 
     def scala_quantita(self):
-        pass
+        self.quantita -= 1
+
+    def incrementa_quantita(self):
+        self.quantita += 1

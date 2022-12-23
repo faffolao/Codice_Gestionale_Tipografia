@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QAbstractItemView, QDialog
 
 from ECommerce.Catalogo import Catalogo
+from Gestione.Database import Database
 from view.CarrelloView import CarrelloView
 from view.DettagliProdottoView import DettagliProdottoView
 from view.MsgBoxView import MsgBox
@@ -31,6 +32,7 @@ class CatalogoView(QMainWindow):
         self.btn_visualizza_dettagli.clicked.connect(self.get_dettagli_prod)
         self.btn_search_prod.clicked.connect(self.ricerca_prodotto)
         self.btn_open_carrello.clicked.connect(self.visualizza_carrello)
+        self.btn_aggiungi_al_carrello.clicked.connect(self.aggiungi_al_carrello)
 
         # caricamento del catalogo
         self.catalogo = Catalogo()
@@ -103,5 +105,22 @@ class CatalogoView(QMainWindow):
                                    "prodotto inesistente.")
 
     def visualizza_carrello(self):
-        self.carrello_view = CarrelloView()
+        self.carrello_view = CarrelloView(self.cliente, self)
         self.carrello_view.show()
+
+    def aggiungi_al_carrello(self):
+        # ottengo il prodotto dal catalogo
+        prod = self.catalogo.ricerca_per_id(self.selected_prod_id)
+
+        # controllo quantità prodotto
+        if prod.get_quantita() <= 0:
+            msg = MsgBox()
+            msg.show_error_msg("Impossibile aggiungere il prodotto nel catalogo: il prodotto selezionato è esaurito.")
+        else:
+            self.cliente.get_carrello_prodotti().aggiungi(prod, self.cliente.get_id())
+
+            prod.scala_quantita()
+            db_con = Database("system.db")
+            db_con.modifica_quantita_prodotto(prod)
+
+            self.carica_catalogo(self.catalogo.get_lista_prodotti())
