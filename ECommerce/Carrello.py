@@ -53,3 +53,15 @@ class Carrello:
         # aggiorno il carrello sul database
         db_con = DB.Database("system.db")
         db_con.aggiorna_carrello(self, user_id)
+
+    def get_totale_prodotti(self):
+        tot = 0
+
+        for prod in self.prodotti:
+            tot += prod.get_prezzo() * prod.get_quantita()
+
+        return tot
+
+    def svuota(self, user_id):
+        db_con = DB.Database("system.db")
+        db_con.svuota_carrello(user_id)

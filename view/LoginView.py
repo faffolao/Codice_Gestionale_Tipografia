@@ -44,8 +44,6 @@ class LoginView(QMainWindow):
                 self.customer_home = HPCV.HomePageClienteView(self.login_manager)
                 self.customer_home.show()
             elif isinstance(user_type, Impiegato):
-                print("la parte del'impiegato arriverà più avanti...")
-                print("no, arriva adesso!")
                 self.employee_home = HPIV.HomePageImpiegatoView(self.login_manager)
                 self.employee_home.show()
 

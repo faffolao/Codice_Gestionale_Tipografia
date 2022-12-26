@@ -42,7 +42,7 @@
       </column>
       <column>
        <property name="text">
-        <string>New Column</string>
+        <string>Username</string>
        </property>
       </column>
       <column>

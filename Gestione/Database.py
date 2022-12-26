@@ -4,6 +4,7 @@ import hashlib
 import time
 import datetime
 
+from ECommerce.Ordine import Ordine
 from ECommerce.Prodotto import Prodotto
 from Utenti.Utente import Utente
 from Utenti.Cliente import Cliente
@@ -36,7 +37,6 @@ class Database:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         idCliente INTEGER NOT NULL,
         ammonto INTEGER NOT NULL,
-        quantita INTEGER NOT NULL,
         dataOra INTEGER NOT NULL,
         via TEXT NOT NULL,
         numeroCivico INTEGER NOT NULL,
@@ -81,15 +81,6 @@ class Database:
                 self.cur.execute(f"CREATE TABLE {table};")
             self.cur.execute("""INSERT INTO Utente(nome, cognome, email, username, password, ruolo)
             VALUES('System', 'Administrator', 'root@admin.com', 'admin', 'deadbeefdeadbeefdeadbeefdeadbeef32d5051379c2292d13f3b022c3847d6f81791d458e7d1a80c1b4898bcbc2f7b2', 'admin')""")
-            self.cur.execute("INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo) Values(?,?,?,?,?)",
-                             (
-                                 "molluschi al vapore",
-                                 "un pranzo gustoso",
-                                 bytes.fromhex(
-                                     "FFD8FFE000104A46494600010101004800480000FFDB004300110C0D0F0D0B110F0E0F131211151A2B1C1A18181A3526281F2B3F3742413E373C3B454E635445495E4B3B3C5676575E676A6F706F43537A83796C82636D6F6BFFDB0043011213131A171A331C1C336B473C476B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6B6BFFC90011080031004A03012200021101031101FFCC000A0010100501101105FFDA000C03010002110311003F00C8BA3854FC3315C0171BE18A6FFE6194D4909D14C99B9C8D90B1F1B0CBE525B6E81076FBFE6F29C544A61F1D745DEA0A20A0BBDDDEFD9C4E989994A0535AED34DB3E21AA2A68BA524BC0E1F20425CA4C0B84EA9BC947BB93FEF26D4E348DD48EABF9C0A54412BA033425BC9125B4F62786103741EFF456626A1B67DBFE7B3DA17BC336A2DC7ACE77EFA090C1D208A652AF1B9EDEA664B3AD996948AB81D568595051DA6C7B299199BFEF6C642BEE501738870872AE026AE15B0B502860D0763FC0EAD007EDF81AC5931C1204C44BB6C63B4536B179E073A2A9279B53AEF24CCC18CCFE214D7CB9ABFEA198EE73A3AFECBA7C171897582E2A25EAF29305199111C0F6B0A375852ADBA55C14BE883160AA6B3798A3FB2BA54052822DA3D7F2FC0CF135F6A2F650CDA68BF3F4CD21CA25F3E67259C27249FCF2B80B783BCDC207E3040007165AA8444F5FA5758FD88FC583A0FB97F2903B1329D7813A941043FF00964C5CD74011DFB124BA0E7D78262E1E7D70CFAEEEA38E74DE86C21B57C5505069C1BAE1969C89FE3F736C64E45AB659F90E537ACBE01FF1B4294137CB31814D01CE1BFF00B6813E77C016A7C5D06D33403902BF6B96804801331DCED723AB13A00D86BDA7D859BB0C2C69228E2BEB7460E0A9C371E31E4008DFE0E72D57FAE3F318EE6743A028D2F56154F61150B6C590C2F918B1DDBBF91960B2B06AB9D8BC3DC4BA49B9E5D613EFBD1CDC794BB881F72B68C7D233AAF1390135C9683A4DAC4A7D9F4A945691043333BF8B7214C177A49287C46AE4FF00E821320CD211661856C4A08D2581EEFA22D3DE73BC2924E83CFC8761DC69B0A5DA7F2F8C281511955B664179D146C37E1F21B659ACDF427A3FF316CEB67FD07C68ADEB4DCDE07FBFFA20E1AA998AA5BFF8690A9D1BA1C551B8B0747F0900236A77B2B220CBBDDC807A13C0FFD9"),
-                                 42,
-                                 69
-                             ))
             self.cur.execute("COMMIT TRANSACTION;")
         else:
             self.dbb = sqlite3.connect(database_path)
@@ -104,7 +95,7 @@ class Database:
         return self.query("SELECT id,username,email FROM Utente").fetchall()
 
     def get_coda_stampa(self):
-        return self.query("SELECT * from Documento").fetchall()
+        return self.query("SELECT * FROM Documento ORDER BY dataOra").fetchall()
 
     def inserisci_doc(self, documento):
         idCliente = documento.get_id_cliente()
@@ -117,17 +108,25 @@ class Database:
         self.query("COMMIT TRANSACTION")
 
     def inserisci_ordine_market(self, ordine):
+        # inserimento ordine
         datiSpedizione = ordine.get_dati_spedizione()
         idCliente = ordine.get_id_cliente()
         ammonto = ordine.get_ammonto()
-        dataOra = round(ordine.get_data())
+        dataOra = ordine.get_data().timestamp()
         via = datiSpedizione["via"]
-        numeroCivico = datiSpedizione["numeroCivico"]
+        numeroCivico = datiSpedizione["num_civico"]
         citta = datiSpedizione["citta"]
         cap = datiSpedizione["cap"]
-        quantita = ordine.get_quantita()
-        self.query("""INSERT INTO Ordine(idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap)
-        VALUES(?, ?, ?, ?, ?, ?, ?,?)""", (idCliente, ammonto, quantita, dataOra, via, numeroCivico, citta, cap))
+
+        self.query("""INSERT INTO Ordine(idCliente, ammonto, dataOra, via, numeroCivico, citta, cap)
+        VALUES(?, ?, ?, ?, ?, ?, ?)""", (idCliente, ammonto, dataOra, via, numeroCivico, citta, cap))
+        self.query("COMMIT TRANSACTION")
+
+        # inserimento prodotti ordinati
+        order_id = self.cur.lastrowid
+        self.query("BEGIN TRANSACTION")
+        for prod in ordine.get_lista_prodotti():
+            self.query("INSERT INTO ProdottiOrdinati VALUES (?, ?, ?)", (order_id, prod.get_id(), prod.get_quantita()))
         self.query("COMMIT TRANSACTION")
 
     def inserisci_utente(self, utente: Utente, ruolo):
@@ -273,3 +272,26 @@ class Database:
         self.query("BEGIN TRANSACTION")
         self.query("UPDATE Prodotto SET quantita = ? WHERE id = ?", (prod.get_quantita(), prod.get_id()))
         self.query("COMMIT TRANSACTION")
+
+    def get_username(self, id):
+        return self.query("SELECT username FROM Utente WHERE id = ?", (id,)).fetchone()
+
+    def get_lista_ordini(self):
+        result = self.query("SELECT * FROM Ordine ORDER BY dataOra").fetchall()
+
+        lista_ordini = []
+        for ordine in result:
+            # ottengo i dati della spedizione
+            ds = {"via": ordine[4], "num_civico": ordine[5], "citta": ordine[6], "cap": ordine[7]}
+            # ottengo i prodotti inclusi nell'ordine
+            prod_list = self.query("SELECT Prodotto.titolo, ProdottiOrdinati.quantita "
+                                   "FROM ProdottiOrdinati "
+                                   "JOIN Prodotto ON ProdottiOrdinati.idProdotto = Prodotto.id "
+                                   "WHERE idOrdine = ?", (ordine[0],)).fetchall()
+            lista_prod = []
+            for prod in prod_list:
+                lista_prod.append(Prodotto(None, 0, None, None, prod[1], prod[0]))
+            # aggiungo tutto ad un ordine
+            lista_ordini.append(Ordine(ordine[2], ordine[3], ds, ordine[0], ordine[1], lista_prod))
+
+        return lista_ordini

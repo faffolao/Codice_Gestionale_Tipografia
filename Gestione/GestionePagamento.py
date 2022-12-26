@@ -6,7 +6,7 @@ class GestionePagamento:
     # Per simulare un comportamento tale anche in ambito didattico abbiamo creato questa classe che simula il conto
     # di un utente e permette così di simulare le operazioni di pagamento delle stampe e degli ordini.
     # È possibile cambiare il saldo iniziale fittizio e il costo delle stampe modificando queste costanti.
-    SALDO = 100
+    SALDO = 9000
     COSTO_DOC = 5
 
     def __init__(self):
@@ -15,6 +15,13 @@ class GestionePagamento:
     def paga_documento(self):
         if self.SALDO >= self.COSTO_DOC:
             self.saldo -= self.COSTO_DOC
+            return True
+        else:
+            return False
+
+    def paga_ordine(self, costo_totale):
+        if self.SALDO >= costo_totale:
+            self.saldo -= costo_totale
             return True
         else:
             return False

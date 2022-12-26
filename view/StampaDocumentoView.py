@@ -35,7 +35,7 @@ class StampaDocumentoView(QMainWindow):
         filename = QFileInfo(selected_file[0]).fileName()
 
         if filename:
-            doc = Documento(filename, self.cliente.get_id())
+            doc = Documento(nome_file=filename, id_cliente=self.cliente.get_id())
             self.sessione_stampa.set_doc(doc)
             self.sessione_stampa.set_carta(self.combo_tipo_carta.currentText())
             self.sessione_stampa.set_rilegatura(self.combo_rilegatura.currentText())

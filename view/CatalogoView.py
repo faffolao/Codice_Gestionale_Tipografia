@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QAbstractItemView, QD
 
 from ECommerce.Catalogo import Catalogo
 from Gestione.Database import Database
+from Gestione.GestioneSessioneMarket import GestioneSessioneMarket
 from view.CarrelloView import CarrelloView
 from view.DettagliProdottoView import DettagliProdottoView
 from view.MsgBoxView import MsgBox
@@ -13,6 +14,7 @@ class CatalogoView(QMainWindow):
     def __init__(self, cliente):
         # inizializzazione finestra
         super(CatalogoView, self).__init__()
+        self.gestione_market = GestioneSessioneMarket()
 
         uic.loadUi('ui/catalogo_prodotti.ui', self)
 
@@ -33,6 +35,7 @@ class CatalogoView(QMainWindow):
         self.btn_search_prod.clicked.connect(self.ricerca_prodotto)
         self.btn_open_carrello.clicked.connect(self.visualizza_carrello)
         self.btn_aggiungi_al_carrello.clicked.connect(self.aggiungi_al_carrello)
+        self.btn_finalizza_ordine.clicked.connect(self.finalizza_ordine)
 
         # caricamento del catalogo
         self.catalogo = Catalogo()
@@ -124,3 +127,12 @@ class CatalogoView(QMainWindow):
             db_con.modifica_quantita_prodotto(prod)
 
             self.carica_catalogo(self.catalogo.get_lista_prodotti())
+
+    def finalizza_ordine(self):
+        if self.gestione_market.finalizza_acquisto(self.cliente.get_carrello_prodotti(), self.cliente.get_id()):
+            msg = MsgBox()
+            msg.show_info_msg("L'ordine è stato correttamente inviato.")
+        else:
+            msg = MsgBox()
+            msg.show_error_msg("L'ordine è stato respinto: controlla: di avere almeno un prodotto nel carrello, "
+                               "di avere saldo sufficiente e di non aver annullato l'ordine.")

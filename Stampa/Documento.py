@@ -1,17 +1,11 @@
 class Documento:
-    # questo costruttore viene usato nell'area della coda di stampa
-    def __init__(self, id, id_cliente, nome_file, tipo_carta, tipo_rilegatura, data):
+    def __init__(self,  id_cliente, nome_file, id=None, tipo_carta=None, tipo_rilegatura=None, data=None):
         self.id = id
         self.id_cliente = id_cliente
         self.nome_file = nome_file
         self.tipo_carta = tipo_carta
         self.tipo_rilegatura = tipo_rilegatura
         self.data = data
-
-    # questo costruttore viene usato nell'area di stampa del documento
-    def __init__(self, nome_file, id_cliente):
-        self.nome_file = nome_file
-        self.id_cliente = id_cliente
 
     def get_data(self):
         return self.data
