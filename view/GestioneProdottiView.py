@@ -15,6 +15,7 @@ class GestioneProdottiView(QMainWindow):
         self.table_prodotti.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.btn_add_prod.clicked.connect(self.aggiungi_prodotto)
+        self.btn_delete_selected.clicked.connect(self.rimuovi_prodotto)
 
         self.catalogo = Catalogo()
         lista_prodotti = self.catalogo.get_lista_prodotti()
@@ -49,3 +50,10 @@ class GestioneProdottiView(QMainWindow):
         if aggiunta_prodotto.exec():
             self.catalogo = Catalogo()
             self.carica_catalogo(self.catalogo.get_lista_prodotti())
+
+    def rimuovi_prodotto(self):
+        prod = list(map(lambda x: int(x.data(0)), self.table_prodotti.selectionModel().selectedRows()))
+        for i in prod:
+            self.catalogo.db_con.rimuovi_prodotto(i)
+        self.catalogo = Catalogo()
+        self.carica_catalogo(self.catalogo.get_lista_prodotti())
