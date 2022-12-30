@@ -148,8 +148,23 @@ class Database:
         immagine = prodotto.get_immagine()
         quantita = prodotto.get_quantita()
         prezzo = prodotto.get_prezzo()
-        self.query(f"""INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo)
+        self.query("""INSERT INTO Prodotto(titolo, descrizione, immagine, quantita, prezzo)
         VALUES(?,?,?,?,?)""", (titolo, descrizione, immagine, quantita, prezzo))
+        self.query("COMMIT TRANSACTION")
+
+    def aggiorna_prodotto(self, prodotto: Prodotto):
+        self.query("""
+        UPDATE Prodotto
+        SET titolo=?, descrizione=?, immagine=?, quantita=?, prezzo=?
+        WHERE id=?
+        """, (prodotto.get_titolo(),
+              prodotto.get_descrizione(),
+              prodotto.get_immagine(),
+              prodotto.get_quantita(),
+              prodotto.get_prezzo(),
+              prodotto.get_id()
+              )
+                   )
         self.query("COMMIT TRANSACTION")
 
     def rimuovi_prodotto(self, id):

@@ -2,6 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QAbstractItemView, QDialog
 from ECommerce.Catalogo import Catalogo
 import view.AggiungiProdottoView as APV
+import view.ModificaProdottoView as MPV
 
 
 class GestioneProdottiView(QMainWindow):
@@ -16,6 +17,7 @@ class GestioneProdottiView(QMainWindow):
 
         self.btn_add_prod.clicked.connect(self.aggiungi_prodotto)
         self.btn_delete_selected.clicked.connect(self.rimuovi_prodotto)
+        self.btn_edit_selected.clicked.connect(self.modifica_prodotto)
 
         self.catalogo = Catalogo()
         lista_prodotti = self.catalogo.get_lista_prodotti()
@@ -57,3 +59,15 @@ class GestioneProdottiView(QMainWindow):
             self.catalogo.db_con.rimuovi_prodotto(i)
         self.catalogo = Catalogo()
         self.carica_catalogo(self.catalogo.get_lista_prodotti())
+
+    def modifica_prodotto(self):
+        prod_list = map(lambda x: self.catalogo.ricerca_per_id(int(x.data(0))), self.table_prodotti.selectionModel().selectedRows())
+        for prod in prod_list:
+            mod_prodotto = MPV.ModificaProdottoView(self.catalogo, prod)
+            if mod_prodotto.exec():
+                print("prodotto aggiornato")
+                self.catalogo = Catalogo()
+                self.carica_catalogo(self.catalogo.get_lista_prodotti())
+            else:
+                print("aggiornamento annullato")
+
