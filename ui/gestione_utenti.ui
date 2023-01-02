@@ -102,7 +102,7 @@
       <item>
        <widget class="QLabel" name="lbl_tutorial">
         <property name="text">
-         <string>Selezionare un utente per poterlo modificare o rimuoverlo.</string>
+         <string>Selezionare un utente per poterlo rimuovere.</string>
         </property>
        </widget>
       </item>
@@ -120,14 +120,10 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_edit_selected">
-        <property name="text">
-         <string>Modifica selezionato</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_delete_selected">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Rimuovi selezionato</string>
         </property>

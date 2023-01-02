@@ -91,8 +91,20 @@ class Database:
             raise ValueError('Deve essere inviata UNA query senza delimitatore')
         return self.cur.execute(f"{query_string};", values)
 
-    def get_lista_utenti(self):
-        return self.query("SELECT id,username,email FROM Utente").fetchall()
+    def get_lista_impiegati(self):
+        list = self.query("SELECT id, username, nome, cognome, email, telefono, dataNascita FROM Utente WHERE ruolo = 'impiegato'").fetchall()
+
+        result = []
+        for tupla in list:
+            if tupla[6] is None:
+                data_nascita = None
+            else:
+                data_nascita = datetime.datetime.fromtimestamp(tupla[6])
+
+            result.append(Impiegato(id=tupla[0], username=tupla[1], nome=tupla[2], cognome=tupla[3], email=tupla[4],
+                                    cellulare=tupla[5], data_nascita=data_nascita, is_admin=False, password="1"))
+
+        return result
 
     def get_coda_stampa(self):
         return self.query("SELECT * FROM Documento ORDER BY dataOra").fetchall()
@@ -135,7 +147,7 @@ class Database:
         email = utente.get_email()
         username = utente.get_username()
         password = self.crittografia_psw(utente.get_password())
-        dataNascita = time.mktime(utente.get_data_nascita().timetuple())
+        dataNascita = datetime.datetime.strptime(utente.get_data_nascita(), "%d/%m/%Y").timestamp()
         telefono = utente.get_cellulare()
         ddt = (nome, cognome, email, username, password, dataNascita, telefono, ruolo)
         self.query("""INSERT INTO Utente(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
@@ -164,7 +176,8 @@ class Database:
               prodotto.get_prezzo(),
               prodotto.get_id()
               )
-                   )
+        )
+
         self.query("COMMIT TRANSACTION")
 
     def rimuovi_prodotto(self, id):
@@ -173,12 +186,7 @@ class Database:
 
     def rimuovi_utente(self, id):
         self.query("BEGIN TRANSACTION")
-        self.query("DELETE FROM CarrelloCliente WHERE idCliente=?", (id,))
-        self.query("""DELETE PO FROM ProdottiOrdinati as PO INNER JOIN Ordine ON PO.idOrdine=Ordine.id
-        WHERE Ordine.idUtente=?""", (id,))
-        self.query("DELETE FROM Ordine WHERE idUtente=?", (id,))
-        self.query("DELETE FROM Documento WHERE idUtente=?", (id,))
-        self.query("DELETE FROM Utente WHERE id=?", (id,))
+        self.query("DELETE FROM Utente WHERE id = ? AND ruolo = 'impiegato'", (id,))
         self.query("COMMIT TRANSACTION")
 
     def get_dettagli_utente(self, username: str):

@@ -10,23 +10,7 @@ class Utente:
         self.password = password
         self.email = email
         self.cellulare = cellulare
-        if type(data_nascita) is str:
-            self.data_nascita = datetime.strptime(data_nascita, '%d/%m/%Y')
-        elif type(data_nascita) is datetime:
-            self.data_nascita = data_nascita
-        else:
-            raise TypeError("data_nascita deve essere un'oggetto datetime o una stringa")
-    """
-    def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita: datetime):
-        self.id = id
-        self.nome = nome
-        self.cognome = cognome
-        self.username = username
-        self.password = password
-        self.email = email
-        self.cellulare = cellulare
         self.data_nascita = data_nascita
-    """
 
     def get_cellulare(self):
         return self.cellulare
@@ -34,7 +18,7 @@ class Utente:
     def get_cognome(self):
         return self.cognome
 
-    def get_data_nascita(self) -> datetime:
+    def get_data_nascita(self):
         return self.data_nascita
 
     def get_email(self):

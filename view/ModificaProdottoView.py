@@ -2,16 +2,17 @@ from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtCore import Qt
-from view.MsgBoxView import MsgBox
 from ECommerce.Prodotto import Prodotto
 from ECommerce.Catalogo import Catalogo
 
+
 class ModificaProdottoView(QDialog):
-    def __init__(self, catalogo: Catalogo, prodotto: Prodotto):
+    def __init__(self, prod_manager, prodotto):
         super(ModificaProdottoView, self).__init__()
-        self.catalogo = catalogo
-        self.prodotto = prodotto
         uic.loadUi('ui/modifica_prodotto.ui', self)
+
+        self.prod_manager = prod_manager
+        self.prodotto = prodotto
 
         self.txt_prod_title.setText(self.prodotto.get_titolo())
         self.txt_prod_description.setText(self.prodotto.get_descrizione())
@@ -31,7 +32,7 @@ class ModificaProdottoView(QDialog):
         self.prodotto.quantita = self.txt_prod_quantita.value()
         self.prodotto.immagine = self.immagine_prodotto
 
-        self.catalogo.db_con.aggiorna_prodotto(self.prodotto)
+        self.prod_manager.modifica_prodotto(self.prodotto)
 
         self.accept()
 

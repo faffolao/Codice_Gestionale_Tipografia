@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow
 import view.GestioneProdottiView as GPV
 import view.LoginView as LV
 from view.CodaStampaView import CodaStampaView
+from view.GestioneUtentiView import GestioneUtentiView
 from view.ListaOrdiniView import ListaOrdiniView
 
 
@@ -24,6 +25,7 @@ class HomePageImpiegatoView(QMainWindow):
         self.btn_logout.clicked.connect(self.logout)
         self.btn_show_coda_stampa.clicked.connect(self.apri_coda_stampa)
         self.btn_show_ordini.clicked.connect(self.apri_lista_ordini)
+        self.btn_gestione_utenti.clicked.connect(self.gestione_utenti)
 
         # se l'impiegato connesso ha i privilegi di admin, abilito il pulsante backup
         if self.login_manager.get_utente_connesso().is_admin():
@@ -46,3 +48,7 @@ class HomePageImpiegatoView(QMainWindow):
     def apri_lista_ordini(self):
         self.lista_ordini = ListaOrdiniView()
         self.lista_ordini.show()
+
+    def gestione_utenti(self):
+        self.gestione_utenti = GestioneUtentiView()
+        self.gestione_utenti.show()
