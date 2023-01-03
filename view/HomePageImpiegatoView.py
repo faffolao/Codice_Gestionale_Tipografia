@@ -1,10 +1,14 @@
+from datetime import datetime
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 import view.GestioneProdottiView as GPV
 import view.LoginView as LV
+from Gestione.GestioneBackup import GestioneBackup
 from view.CodaStampaView import CodaStampaView
 from view.GestioneUtentiView import GestioneUtentiView
 from view.ListaOrdiniView import ListaOrdiniView
+from view.MsgBoxView import MsgBox
 
 
 class HomePageImpiegatoView(QMainWindow):
@@ -26,6 +30,7 @@ class HomePageImpiegatoView(QMainWindow):
         self.btn_show_coda_stampa.clicked.connect(self.apri_coda_stampa)
         self.btn_show_ordini.clicked.connect(self.apri_lista_ordini)
         self.btn_gestione_utenti.clicked.connect(self.gestione_utenti)
+        self.btn_run_backup.clicked.connect(self.esegui_backup)
 
         # se l'impiegato connesso ha i privilegi di admin, abilito il pulsante backup
         if self.login_manager.get_utente_connesso().is_admin():
@@ -52,3 +57,10 @@ class HomePageImpiegatoView(QMainWindow):
     def gestione_utenti(self):
         self.gestione_utenti = GestioneUtentiView()
         self.gestione_utenti.show()
+
+    def esegui_backup(self):
+        backup_mgr = GestioneBackup()
+        backup_mgr.effettua_backup()
+
+        msg = MsgBox()
+        msg.show_info_msg(f"Backup completato correttamente, è stato salvato sul file backup-{datetime.now().strftime('%d-%m-%Y_%H%M%S')}.sql.")
