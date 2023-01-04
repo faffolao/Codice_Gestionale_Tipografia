@@ -18,9 +18,8 @@ class App(QApplication):
         worker = Gestione.BackupWorker.BackupWorker()
         worker.start()
 
-        self.using_model = GestioneAccessi()
-
         # inizializzazione vista iniziale -> login form
+        self.using_model = GestioneAccessi()
         self.login_view = LoginView(self.using_model)
         self.login_view.show()
 
