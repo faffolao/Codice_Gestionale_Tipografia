@@ -79,7 +79,7 @@ class TestDatabase(unittest.TestCase):
 
     def test_crd_cliente(self):
         out(3, "Inserimento, verifica uguaglianza ed eliminazione:")
-        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/2023")
+        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/2001")
         self.assertTrue(self.database.inserisci_utente(cliente, "cliente"), "Problema nell'inserimento dell'utente")
         db_cliente = self.database.get_dettagli_utente(cliente.username)
         # devo cifrare la psw per poter confrontarla con quella nel db manualmente
@@ -90,7 +90,12 @@ class TestDatabase(unittest.TestCase):
         out(None, "".join(str(cliente.__dir__())))
         out(None, "".join(str(db_cliente.__dir__())))
         self.assertTrue(cliente.__eq__(db_cliente), "L'utente inserito nel DB non corrisponde a quello di Test")
+        #rimuovo l'utente dal db
+        self.database.query("BEGIN TRANSACTION")
+        self.database.query("DELETE FROM Utente WHERE id = ? ", (db_cliente.id,))
+        self.assertTrue(self.database.query("COMMIT TRANSACTION"))
         out(3, "Done!")
+
 
 
 if __name__ == '__main__':

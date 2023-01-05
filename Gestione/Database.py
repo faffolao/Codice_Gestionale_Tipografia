@@ -184,7 +184,7 @@ class Database:
         self.query(f"DELETE FROM Prodotto WHERE id=?", (id,))
         self.query("COMMIT TRANSACTION")
 
-    def rimuovi_utente(self, id):
+    def utente(self, id):
         self.query("BEGIN TRANSACTION")
         self.query("DELETE FROM Utente WHERE id = ? AND ruolo = 'impiegato'", (id,))
         self.query("COMMIT TRANSACTION")
@@ -206,7 +206,7 @@ class Database:
         if data_nascita_unix is None:
             data_nascita_unix = 0
         dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix).strftime("%d/%m/%Y")
-        telefono = int(dati[7])
+        telefono = dati[7]
         ruolo = dati[8]
         if ruolo == "cliente":
             return Cliente(id, nome, cognome, username, password, email, telefono, dataNascita)

@@ -18,7 +18,7 @@ class Cliente(Utente):
             # don't attempt to compare against unrelated types
             return NotImplemented
 
-        return self.nome == other.nome and self.cognome == other.cognome and self.username == other.username and self.password == other.password and self.email == other.email and self.cellulare == other.cellulare and self.data_nascita == other.data_nascita
+        return self.nome == other.nome and self.cognome == other.cognome and self.username == other.username and self.password == other.password and self.email == other.email and int(self.cellulare) == int(other.cellulare) and self.data_nascita == other.data_nascita
 
     def __dir__(self) -> Iterable[str]:
         return [self.nome, self.cognome, self.username, self.password, self.email, self.cellulare, self.data_nascita]
