@@ -64,4 +64,4 @@ class HomePageImpiegatoView(QMainWindow):
         backup_mgr.effettua_backup()
 
         msg = MsgBox()
-        msg.show_info_msg(f"Backup completato correttamente, è stato salvato sul file Backupt/backup-{datetime.now().strftime('%d-%m-%Y_%H%M%S')}.sql.")
+        msg.show_info_msg(f"Backup completato correttamente, è stato salvato sul file Backup/backup-{datetime.now().strftime('%d-%m-%Y_%H%M%S')}.sql.")
