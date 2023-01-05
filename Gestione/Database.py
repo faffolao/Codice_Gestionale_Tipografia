@@ -152,7 +152,7 @@ class Database:
         ddt = (nome, cognome, email, username, password, dataNascita, telefono, ruolo)
         self.query("""INSERT INTO Utente(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
         VALUES(?,?,?,?,?,?,?,?)""", ddt)
-        self.query("COMMIT TRANSACTION")
+        return self.query("COMMIT TRANSACTION")
 
     def inserisci_prodotto(self, prodotto):
         titolo = prodotto.get_titolo()
@@ -205,8 +205,8 @@ class Database:
         data_nascita_unix = dati[6]
         if data_nascita_unix is None:
             data_nascita_unix = 0
-        dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix)
-        telefono = dati[7]
+        dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix).strftime("%d/%m/%Y")
+        telefono = int(dati[7])
         ruolo = dati[8]
         if ruolo == "cliente":
             return Cliente(id, nome, cognome, username, password, email, telefono, dataNascita)
