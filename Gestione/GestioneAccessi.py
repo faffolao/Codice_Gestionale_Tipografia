@@ -4,6 +4,7 @@ from Gestione.Database import Database
 from Utenti.Utente import Utente
 from view.MsgBoxView import MsgBox
 
+
 class GestioneAccessi(QObject):
     def __init__(self):
         super().__init__()

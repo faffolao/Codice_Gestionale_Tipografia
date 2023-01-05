@@ -1,5 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
+
 import view.LoginView as LV
 from Gestione.GestioneSessioneStampa import GestioneSessioneStampa
 from view.CatalogoView import CatalogoView

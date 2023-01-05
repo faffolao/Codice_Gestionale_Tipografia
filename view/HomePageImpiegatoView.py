@@ -2,6 +2,7 @@ from datetime import datetime
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
+
 import view.GestioneProdottiView as GPV
 import view.LoginView as LV
 from Gestione.GestioneBackup import GestioneBackup

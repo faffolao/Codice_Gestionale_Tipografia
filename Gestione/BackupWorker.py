@@ -1,5 +1,7 @@
+import sched
+import time
+
 from PyQt5.QtCore import QThread
-import sched, time
 
 import Gestione.GestioneBackup
 

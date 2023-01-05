@@ -4,7 +4,6 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 import Gestione.BackupWorker
-from Gestione.Database import Database
 from Gestione.GestioneAccessi import GestioneAccessi
 from view.LoginView import LoginView
 

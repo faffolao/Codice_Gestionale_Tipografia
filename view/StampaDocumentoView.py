@@ -2,7 +2,6 @@ from PyQt5 import uic
 from PyQt5.QtCore import QFileInfo
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
-from Gestione.GestioneSessioneStampa import GestioneSessioneStampa
 from Stampa.Documento import Documento
 from view.MsgBoxView import MsgBox
 

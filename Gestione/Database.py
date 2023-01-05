@@ -1,14 +1,14 @@
-import sqlite3
-import os.path
-import hashlib
-import time
 import datetime
+import hashlib
+import os.path
+import sqlite3
+import time
 
 from ECommerce.Ordine import Ordine
 from ECommerce.Prodotto import Prodotto
-from Utenti.Utente import Utente
 from Utenti.Cliente import Cliente
 from Utenti.Impiegato import Impiegato
+from Utenti.Utente import Utente
 
 
 class Database:

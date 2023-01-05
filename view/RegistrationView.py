@@ -1,8 +1,8 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog
 
-from Utenti.Cliente import Cliente
 import view.HomePageClienteView as HPCV
+from Utenti.Cliente import Cliente
 from view.MsgBoxView import MsgBox
 
 

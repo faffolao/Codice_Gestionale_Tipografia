@@ -1,6 +1,3 @@
-from datetime import datetime
-
-
 class Utente:
     def __init__(self, id, nome, cognome, username, password, email, cellulare, data_nascita):
         self.id = id

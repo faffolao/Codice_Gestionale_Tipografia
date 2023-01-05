@@ -5,9 +5,8 @@ import view.HomePageClienteView as HPCV
 import view.HomePageImpiegatoView as HPIV
 from Utenti.Cliente import Cliente
 from Utenti.Impiegato import Impiegato
-
-from view.RegistrationView import RegistrationView
 from view.MsgBoxView import MsgBox
+from view.RegistrationView import RegistrationView
 
 
 class LoginView(QMainWindow):

@@ -1,6 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QAbstractItemView, QDialog
-from ECommerce.Catalogo import Catalogo
+
 import view.AggiungiProdottoView as APV
 import view.ModificaProdottoView as MPV
 from Gestione.GestioneProdotti import GestioneProdotti

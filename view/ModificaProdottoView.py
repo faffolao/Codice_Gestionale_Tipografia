@@ -1,9 +1,7 @@
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QFileDialog
-from PyQt5.QtCore import Qt
-from ECommerce.Prodotto import Prodotto
-from ECommerce.Catalogo import Catalogo
 
 
 class ModificaProdottoView(QDialog):

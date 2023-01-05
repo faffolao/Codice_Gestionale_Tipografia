@@ -1,8 +1,9 @@
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QMainWindow, QDialog, QFileDialog
-from view.MsgBoxView import MsgBox
+from PyQt5.QtWidgets import QDialog, QFileDialog
+
 from ECommerce.Prodotto import Prodotto
+from view.MsgBoxView import MsgBox
 
 
 class AggiungiProdottoView(QDialog):
