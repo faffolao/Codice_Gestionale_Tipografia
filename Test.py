@@ -79,7 +79,7 @@ class TestDatabase(unittest.TestCase):
 
     def test_crd_cliente(self):
         out(3, "Inserimento, verifica uguaglianza ed eliminazione:")
-        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/2001")
+        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/01")
         self.assertTrue(self.database.inserisci_utente(cliente, "cliente"), "Problema nell'inserimento dell'utente")
         db_cliente = self.database.get_dettagli_utente(cliente.username)
         # devo cifrare la psw per poter confrontarla con quella nel db manualmente
