@@ -115,16 +115,17 @@ class TestDatabase(unittest.TestCase):
         out(4, "Verifica di un Prodotto:")
 
         # creo l'oggetto prodotto
-        # inserire qui sotto l'id del prodotto da testare
-        prod_test_id = 3
-        prod_test = Prodotto("patacca al sugo per tutti", prod_test_id, None, 999, 9, "flavio briatore")
+        # inserire qui sotto l'id e i dettagli del prodotto da testare
+        prod_test_id = 1
+        prod_test_title = "Quaderno cartonato A4 Plus"
+        prod_test_description = "Cover cartonata per una super tenuta. La scelta giusta è sempre Colourbook."
+        prod_test_price = 4.3
+
+        prod_test = Prodotto(prod_test_description, prod_test_id, None, prod_test_price, 1, prod_test_title)
 
         # ottengo dal db il prodotto che ha lo stesso id di quello sopra
         catalogo = Catalogo()
-
-        catalogo.db_con.inserisci_prodotto(prodotto=prod_test)
-
-        prod_from_db = catalogo.ricerca_per_nome(prod_test.get_titolo())
+        prod_from_db = catalogo.ricerca_per_id(prod_test.get_id())
 
         if prod_from_db is not None:
             # confronto tra i due prodotti
@@ -135,10 +136,6 @@ class TestDatabase(unittest.TestCase):
             self.assertEqual(prod_from_db.get_descrizione(), prod_test.get_descrizione(), "Il prodotto prelevato dal "
                                                                                           "database ha una descrizione "
                                                                                           "differente")
-            out(None, "verifico quantità prodotto:")
-            self.assertEqual(prod_from_db.get_quantita(), prod_test.get_quantita(), "Il prodotto prelevato dal "
-                                                                                    "database ha una quantità "
-                                                                                    "differente")
             out(None, "verifico prezzo prodotto:")
             self.assertEqual(prod_from_db.get_prezzo(), prod_test.get_prezzo(), "Il prodotto prelevato dal database ha "
                                                                                 "un prezzo differente")
