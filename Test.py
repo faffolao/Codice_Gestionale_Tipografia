@@ -1,3 +1,4 @@
+import datetime
 import unittest
 
 from ECommerce.Catalogo import Catalogo
@@ -87,7 +88,7 @@ class TestDatabase(unittest.TestCase):
         out(3, "Inserimento, verifica uguaglianza ed eliminazione di un Cliente:")
 
         # inserisco l'utente nel db
-        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/01")
+        cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, datetime.datetime(2001, 1, 1))
         self.assertTrue(self.database.inserisci_utente(cliente, "cliente"), "Problema nell'inserimento dell'utente")
 
         # lo confronto con un altro
@@ -120,7 +121,10 @@ class TestDatabase(unittest.TestCase):
 
         # ottengo dal db il prodotto che ha lo stesso id di quello sopra
         catalogo = Catalogo()
-        prod_from_db = catalogo.ricerca_per_id(prod_test.get_id())
+
+        catalogo.db_con.inserisci_prodotto(prodotto=prod_test)
+
+        prod_from_db = catalogo.ricerca_per_nome(prod_test.get_titolo())
 
         if prod_from_db is not None:
             # confronto tra i due prodotti
