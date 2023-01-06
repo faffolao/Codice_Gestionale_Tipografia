@@ -36,9 +36,10 @@ class ModificaProdottoView(QDialog):
 
     def select_image(self):
         filename, _ = QFileDialog.getOpenFileName(self)
-        with open(filename, "rb") as file_immagine:
-            self.immagine_prodotto = file_immagine.read()
+        if filename != '':
+            with open(filename, "rb") as file_immagine:
+                self.immagine_prodotto = file_immagine.read()
 
-        pix = QPixmap()
-        pix.loadFromData(self.immagine_prodotto)
-        self.lbl_selected_img.setPixmap(pix.scaled(181, 101, Qt.KeepAspectRatio))
+            pix = QPixmap()
+            pix.loadFromData(self.immagine_prodotto)
+            self.lbl_selected_img.setPixmap(pix.scaled(181, 101, Qt.KeepAspectRatio))

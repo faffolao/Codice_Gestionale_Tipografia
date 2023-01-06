@@ -184,7 +184,7 @@ class Database:
         self.query(f"DELETE FROM Prodotto WHERE id=?", (id,))
         self.query("COMMIT TRANSACTION")
 
-    def utente(self, id):
+    def rimuovi_utente(self, id):
         self.query("BEGIN TRANSACTION")
         self.query("DELETE FROM Utente WHERE id = ? AND ruolo = 'impiegato'", (id,))
         self.query("COMMIT TRANSACTION")

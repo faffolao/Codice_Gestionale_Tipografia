@@ -12,6 +12,7 @@ class AggiungiProdottoView(QDialog):
         uic.loadUi('ui/aggiungi_prodotto.ui', self)
 
         self.prod_manager = prod_manager
+        self.dati_immagine = None
 
         self.btn_select_image.clicked.connect(self.select_image)
         self.btn_aggiungi_prod.clicked.connect(self.aggiungi)
@@ -38,9 +39,10 @@ class AggiungiProdottoView(QDialog):
 
     def select_image(self):
         filename, _ = QFileDialog.getOpenFileName(self)
-        with open(filename, "rb") as file_immagine:
-            self.dati_immagine = file_immagine.read()
+        if filename != '':
+            with open(filename, "rb") as file_immagine:
+                self.dati_immagine = file_immagine.read()
 
-        pix = QPixmap()
-        pix.loadFromData(self.dati_immagine)
-        self.lbl_selected_img.setPixmap(pix.scaledToHeight(101))
+            pix = QPixmap()
+            pix.loadFromData(self.dati_immagine)
+            self.lbl_selected_img.setPixmap(pix.scaledToHeight(101))
