@@ -314,7 +314,7 @@ class Database:
             lista_prod = []
             for prod in prod_list:
                 lista_prod.append(Prodotto(None, 0, None, None, prod[1], prod[0]))
-            # aggiungo tutto ad un ordine
+            # aggiungo tutto a un ordine
             lista_ordini.append(Ordine(ordine[2], ordine[3], ds, ordine[0], ordine[1], lista_prod))
 
         return lista_ordini

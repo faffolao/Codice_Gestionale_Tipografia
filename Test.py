@@ -1,7 +1,7 @@
-import sqlite3
 import unittest
-import os
 
+from ECommerce.Catalogo import Catalogo
+from ECommerce.Prodotto import Prodotto
 from Gestione.Database import Database
 from Utenti.Cliente import Cliente
 
@@ -27,7 +27,7 @@ class bcolors:
 
 def out(num: int, msg: str) -> None:
     if OUTPUT_DEBUG:
-        if (num is not None):
+        if num is not None:
             print(bcolors.HEADER + "<Test " + str(num) + ">" + bcolors.ENDC + msg)
         else:
             print("\t" + msg)
@@ -37,19 +37,22 @@ class TestDatabase(unittest.TestCase):
     database_path = "system.db"
     database = Database(database_path)
 
-    """Testo la connessione al database controllando se viene eseguita una queri
+    """Testo la connessione al database controllando se viene eseguita una query
      che non necessita di tabelle"""
 
     def test_db_connection(self):
         out(1, "Controllo connessione database:")
+
         res = self.database.query("SELECT 1")
         self.assertEqual(res.fetchone()[0], 1, "Problema di connessione al DB")  # add assertion here
+
         out(1, "Done!")
 
     """Controllo se le tabelle esistenti nel database sono tutte"""
 
     def test_db_table(self):
-        out(2, "Controllo Tabelle:")
+        out(2, "Controllo tabelle del database:")
+
         tables = [
             ["Utente", ["id", "nome", "cognome", "email", "username", "password", "dataNascita", "telefono", "ruolo"]],
             ["Prodotto", ["id", "titolo", "descrizione", "immagine", "quantita", "prezzo"]],
@@ -57,10 +60,11 @@ class TestDatabase(unittest.TestCase):
             ["Ordine", ["id", "idCliente", "ammonto", "dataOra", "via", "numeroCivico", "citta", "cap"]],
             ["Documento", ["id", "idCliente", "tipoCarta", "tipoRilegatura", "nomeFile", "dataOra"]],
             ["CarrelloCliente", ["idCliente", "idProdotto", "quantita"]]
-
         ]
+
         res = self.database.query(
             "SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%' ORDER BY name DESC")
+
         i = 0
         for table in res.fetchall():
             out(None, table[0])
@@ -73,29 +77,73 @@ class TestDatabase(unittest.TestCase):
                     self.assertEqual(col[1], tables[i][1][j])
                     j = j + 1
             i = i + 1
+
         out(2, "Done!")
 
-    """Testo l'inserimento e la rimozione di un utente di prova e confronto se l'oggetto originale e quello scritto nel db sono identici"""
+    """Testo l'inserimento e la rimozione di un utente di prova e confronto se l'oggetto originale e quello scritto 
+    nel db sono identici"""
 
     def test_crd_cliente(self):
-        out(3, "Inserimento, verifica uguaglianza ed eliminazione:")
+        out(3, "Inserimento, verifica uguaglianza ed eliminazione di un Cliente:")
+
+        # inserisco l'utente nel db
         cliente = Cliente(1, "Test", "Test", "Test", "Test", "Test@Test.it", 1111111111, "01/01/01")
         self.assertTrue(self.database.inserisci_utente(cliente, "cliente"), "Problema nell'inserimento dell'utente")
+
+        # lo confronto con un altro
         db_cliente = self.database.get_dettagli_utente(cliente.username)
         # devo cifrare la psw per poter confrontarla con quella nel db manualmente
         salt = bytes.fromhex(db_cliente.get_password()[:32])
         enc_guess = self.database.crittografia_psw_determ(cliente.get_password(), salt)
         cliente.password = enc_guess
+
         out(None, "Confronto")
         out(None, "".join(str(cliente.__dir__())))
         out(None, "".join(str(db_cliente.__dir__())))
         self.assertTrue(cliente.__eq__(db_cliente), "L'utente inserito nel DB non corrisponde a quello di Test")
-        #rimuovo l'utente dal db
+
+        # rimuovo l'utente dal db
         self.database.query("BEGIN TRANSACTION")
         self.database.query("DELETE FROM Utente WHERE id = ? ", (db_cliente.id,))
         self.assertTrue(self.database.query("COMMIT TRANSACTION"))
+
+        # test finito
         out(3, "Done!")
 
+    def test_prodotto(self):
+        out(4, "Verifica di un Prodotto:")
+
+        # creo l'oggetto prodotto
+        # inserire qui sotto l'id del prodotto da testare
+        prod_test_id = 3
+        prod_test = Prodotto("patacca al sugo per tutti", prod_test_id, None, 999, 9, "flavio briatore")
+
+        # ottengo dal db il prodotto che ha lo stesso id di quello sopra
+        catalogo = Catalogo()
+        prod_from_db = catalogo.ricerca_per_id(prod_test.get_id())
+
+        if prod_from_db is not None:
+            # confronto tra i due prodotti
+            out(None, "verifico titolo prodotto:")
+            self.assertEqual(prod_from_db.get_titolo(), prod_test.get_titolo(), "Il prodotto prelevato dal database ha "
+                                                                                "un titolo differente")
+            out(None, "verifico descrizione prodotto:")
+            self.assertEqual(prod_from_db.get_descrizione(), prod_test.get_descrizione(), "Il prodotto prelevato dal "
+                                                                                          "database ha una descrizione "
+                                                                                          "differente")
+            out(None, "verifico quantità prodotto:")
+            self.assertEqual(prod_from_db.get_quantita(), prod_test.get_quantita(), "Il prodotto prelevato dal "
+                                                                                    "database ha una quantità "
+                                                                                    "differente")
+            out(None, "verifico prezzo prodotto:")
+            self.assertEqual(prod_from_db.get_prezzo(), prod_test.get_prezzo(), "Il prodotto prelevato dal database ha "
+                                                                                "un prezzo differente")
+        else:
+            # dico che il test è fallito perchè il prodotto da esaminare non è stato trovato nel db
+            self.fail("Test non superato: il prodotto non esiste nel catalogo e nel database")
+
+        # test finito
+        out(4, "Done!")
 
 
 if __name__ == '__main__':
