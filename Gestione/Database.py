@@ -147,7 +147,7 @@ class Database:
         email = utente.get_email()
         username = utente.get_username()
         password = self.crittografia_psw(utente.get_password())
-        dataNascita = datetime.datetime.strptime(utente.get_data_nascita(), "%d/%m/%y").timestamp()
+        dataNascita = utente.get_data_nascita().timestamp()
         telefono = utente.get_cellulare()
         ddt = (nome, cognome, email, username, password, dataNascita, telefono, ruolo)
         self.query("""INSERT INTO Utente(nome, cognome, email, username, password, dataNascita, telefono, ruolo)
@@ -205,7 +205,7 @@ class Database:
         data_nascita_unix = dati[6]
         if data_nascita_unix is None:
             data_nascita_unix = 0
-        dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix).strftime("%d/%m/%y")
+        dataNascita = datetime.datetime.fromtimestamp(data_nascita_unix)
         telefono = dati[7]
         ruolo = dati[8]
         if ruolo == "cliente":

@@ -1,5 +1,8 @@
+import datetime
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtCore import QDate
 
 import view.HomePageClienteView as HPCV
 from Utenti.Cliente import Cliente
@@ -25,7 +28,8 @@ class RegistrationView(QDialog):
         cognome = self.txt_cognome.text()
         email = self.txt_email.text()
         cellulare = self.txt_cellulare.text()
-        data_nascita = self.data_nascita_input.text()
+        data_nascita = self.data_nascita_input.date().toPyDate()
+        data_nascita = datetime.datetime(data_nascita.year, data_nascita.month, data_nascita.day)
 
         if self.check_fields(username, password, nome, cognome, email, cellulare):
             usr = Cliente(None, nome, cognome, username, password, email, cellulare, data_nascita)

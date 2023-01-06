@@ -1,3 +1,5 @@
+import datetime
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog
 
@@ -23,7 +25,8 @@ class AggiungiUtenteView(QDialog):
         cognome = self.txt_cognome.text()
         email = self.txt_email.text()
 
-        data_nascita = self.txt_data_nascita.text()
+        data_nascita = self.txt_data_nascita.date().toPyDate()
+        data_nascita = datetime.datetime(data_nascita.year, data_nascita.month, data_nascita.day)
         cell = self.txt_cell.text()
 
         if username == "" or password == "" or nome == "" or cognome == "" or email == "":
