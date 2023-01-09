@@ -1,4 +1,7 @@
 import datetime
+import string
+import sys
+import time
 import unittest
 
 from ECommerce.Catalogo import Catalogo
@@ -112,37 +115,50 @@ class TestDatabase(unittest.TestCase):
         out(3, "Done!")
 
     def test_prodotto(self):
-        out(4, "Verifica di un Prodotto:")
+        out(4, "Verifica di un Prodotto...")
 
         # creo l'oggetto prodotto
         # inserire qui sotto l'id e i dettagli del prodotto da testare
         prod_test_id = 1
-        prod_test_title = "Quaderno cartonato A4 Plus"
-        prod_test_description = "Cover cartonata per una super tenuta. La scelta giusta è sempre Colourbook."
-        prod_test_price = 4.3
+        prod_test_title = str(time.time())
+        prod_test_description = string.printable
+        prod_test_price = sys.float_info.max
 
         prod_test = Prodotto(prod_test_description, prod_test_id, None, prod_test_price, 1, prod_test_title)
+        self.database.inserisci_prodotto(prod_test)
 
         # ottengo dal db il prodotto che ha lo stesso id di quello sopra
-        catalogo = Catalogo()
-        prod_from_db = catalogo.ricerca_per_id(prod_test.get_id())
+        prod_from_db = self.database.query(
+            "SELECT * FROM Prodotto WHERE Prodotto.titolo = '" + prod_test.get_titolo() + "'")
+        print("SELECT * FROM Prodotto WHERE Prodotto.titolo = '" + prod_test.get_titolo() + "'")
 
         if prod_from_db is not None:
+            prod_from_db = prod_from_db.fetchall()
+            print(prod_from_db)
             # confronto tra i due prodotti
-            out(None, "verifico titolo prodotto:")
-            self.assertEqual(prod_from_db.get_titolo(), prod_test.get_titolo(), "Il prodotto prelevato dal database ha "
-                                                                                "un titolo differente")
+            out(None, "verifico titolo prodotto...")
+
+            self.assertEqual(prod_from_db[0][1], prod_test.get_titolo(),
+                             "Il prodotto prelevato dal database ha un titolo differente")
             out(None, "verifico descrizione prodotto:")
-            self.assertEqual(prod_from_db.get_descrizione(), prod_test.get_descrizione(), "Il prodotto prelevato dal "
-                                                                                          "database ha una descrizione "
-                                                                                          "differente")
-            out(None, "verifico prezzo prodotto:")
-            self.assertEqual(prod_from_db.get_prezzo(), prod_test.get_prezzo(), "Il prodotto prelevato dal database ha "
-                                                                                "un prezzo differente")
+            self.assertEqual(prod_from_db[0][2], prod_test.get_descrizione(),
+                             "Il prodotto prelevato dal "
+                             "database ha una descrizione "
+                             "differente")
+            out(None, "verifico prezzo prodotto...")
+            self.assertEqual(prod_from_db[0][5], prod_test.get_prezzo(),
+                             "Il prodotto prelevato dal database ha "
+                             "un prezzo differente")
+
         else:
             # dico che il test è fallito perchè il prodotto da esaminare non è stato trovato nel db
             self.fail("Test non superato: il prodotto non esiste nel catalogo e nel database")
 
+        self.database.rimuovi_prodotto(prod_from_db[0][0])
+        prod_from_db = self.database.query(
+            "SELECT * FROM Prodotto WHERE Prodotto.titolo = '" + prod_test.get_titolo() + "'")
+        out(None, "Verifico corretta cancellazione prodotto...")
+        self.assertIsNone(prod_from_db.fetchone())
         # test finito
         out(4, "Done!")
 
