@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import os.path
 import sqlite3
+import string
 import time
 
 from ECommerce.Ordine import Ordine
@@ -69,7 +70,7 @@ class Database:
         PRIMARY KEY(idOrdine, idProdotto)
         )"""
     ]
-    alfabeto = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890"
+    alfabeto = string.printable
 
     def __init__(self, database_path):
 
