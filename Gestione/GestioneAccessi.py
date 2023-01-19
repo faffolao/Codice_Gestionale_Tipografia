@@ -33,4 +33,4 @@ class GestioneAccessi(QObject):
         db_con = Database("system.db")
         db_con.inserisci_utente(utente, "cliente")
 
-        self.utente_connesso = utente
+        self.utente_connesso = db_con.get_dettagli_utente(utente.get_username())
